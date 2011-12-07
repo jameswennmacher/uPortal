@@ -103,13 +103,19 @@
         <filters.file>filters/${env}.properties</filters.file>
     
         <!-- WAR Dependency Version Properties -->
+        <AthleticsPortlet.version>1.0.0-M1</AthleticsPortlet.version>
+        <Announcements.version>1.1.0-SNAPSHOT</Announcements.version>
         <BookmarksPortlet.version>1.0.10</BookmarksPortlet.version>
+        <CalendarPortlet.version>2.0.0</CalendarPortlet.version>
         <cas-server.version>3.4.8</cas-server.version>
         <cas-clearpass.version>1.0.7.GA</cas-clearpass.version>
         <cas-proxy-test-portlet.version>1.0.0-RC3</cas-proxy-test-portlet.version>
-        <email-preview.version>1.1.1</email-preview.version>
+        <CoursesPortlet.version>1.0.0-M1</CoursesPortlet.version>
+        <DiningMenusPortlet.version>1.0.0-M1</DiningMenusPortlet.version>
+        <email-preview.version>1.1.0</email-preview.version>
         <FunctionalTestsPortlet.version>1.1.0-RC1</FunctionalTestsPortlet.version>
-        <jasig-widget-portlets.version>1.0.0-RC3</jasig-widget-portlets.version>
+        <jasig-widget-portlets.version>1.0.0-RC4-SNAPSHOT</jasig-widget-portlets.version>
+        <MapPortlet.version>1.0.0-M1</MapPortlet.version>
         <NewsReaderPortlet.version>3.0.0</NewsReaderPortlet.version>
         <SimpleContentPortlet.version>1.0.2</SimpleContentPortlet.version>
         <WeatherPortlet.version>1.0.8</WeatherPortlet.version>
