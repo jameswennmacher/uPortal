@@ -51,19 +51,16 @@
     <portlet-preference>
         <name>locationCodes</name>
         <readOnly>false</readOnly>
-        <value>2459115</value>
-        <value>1118370</value>
+        <value>2410128</value>
     </portlet-preference>
     <portlet-preference>
         <name>locations</name>
         <readOnly>false</readOnly>
-        <value>New York, NY</value>
-        <value>Tokyo, Japan(Tokyo)</value>
+        <value>Gilbert, AZ</value>
     </portlet-preference>
     <portlet-preference>
         <name>units</name>
         <readOnly>false</readOnly>
         <value>F</value>
-        <value>C</value>
     </portlet-preference>
 </portlet-definition>

@@ -20,28 +20,24 @@
 
 -->
 <portlet-definition xmlns="https://source.jasig.org/schemas/uportal/io/portlet-definition" xmlns:ns2="https://source.jasig.org/schemas/uportal" xmlns:ns3="https://source.jasig.org/schemas/uportal/io/permission-owner" xmlns:ns4="https://source.jasig.org/schemas/uportal/io/stylesheet-descriptor" xmlns:ns5="https://source.jasig.org/schemas/uportal/io/portlet-type" xmlns:ns6="https://source.jasig.org/schemas/uportal/io/user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.0" xsi:schemaLocation="https://source.jasig.org/schemas/uportal/io/portlet-definition https://source.jasig.org/schemas/uportal/io/portlet-definition/portlet-definition-4.0.xsd">
-    <title>Directory</title>
-    <name>Directory</name>
-    <fname>directory</fname>
-    <desc>Directory of users and contact information</desc>
+    <title>Announcements</title>
+    <name>Announcements</name>
+    <fname>announcements</fname>
+    <desc>Recent announcements.</desc>
     <type>Portlet</type>
-    <timeout>30000</timeout>
+    <timeout>15000</timeout>
     <portlet-descriptor>
-        <ns2:isFramework>true</ns2:isFramework>
-        <ns2:portletName>Directory</ns2:portletName>
+        <ns2:webAppName>/Announcements</ns2:webAppName>
+        <ns2:portletName>AnnouncementsDisplay</ns2:portletName>
     </portlet-descriptor>
     <category>Information</category>
-    <group>Employees</group>
-    <parameter>
-        <name>disableDynamicTitle</name>
-        <value>true</value>
-    </parameter>
-    <parameter>
-        <name>iconUrl</name>
-        <value>/ResourceServingWebapp/rs/tango/0.8.90/32x32/mimetypes/x-office-address-book.png</value>
-    </parameter>
+    <group>Everyone</group>
     <parameter>
         <name>mobileIconUrl</name>
-        <value>/uPortal/media/skins/icons/mobile/directory.png</value>
+        <value>/uPortal/media/skins/icons/mobile/bullhorn.png</value>
+    </parameter>
+    <parameter>
+        <name>editable</name>
+        <value>true</value>
     </parameter>
 </portlet-definition>

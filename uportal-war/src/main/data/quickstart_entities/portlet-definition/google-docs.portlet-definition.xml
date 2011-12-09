@@ -36,6 +36,10 @@
         <name>editable</name>
         <value>true</value>
     </parameter>
+    <parameter>
+        <name>hideFromMobile</name>
+        <value>true</value>
+    </parameter>
     <portlet-preference>
         <name>configuredUrl</name>
         <readOnly>false</readOnly>

@@ -27,6 +27,7 @@
   <children>
     <group>Authenticated Users</group>
     <group>PAGS Root</group>
+    <group>SmartLdap ROOT</group>
     <group>Guests</group>
     <group>Portal System</group>
   </children>

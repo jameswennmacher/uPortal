@@ -20,27 +20,29 @@
 
 -->
 <layout xmlns:dlm="http://www.uportal.org/layout/dlm" script="classpath://org/jasig/portal/io/import-layout_v3-2.crn" username="welcome-lo">
-  <folder ID="s1" hidden="false" immutable="false" name="Root folder" type="root" unremovable="true">
-    <folder ID="s2" hidden="true" immutable="true" name="Header folder" type="header" unremovable="true">
-      <channel fname="fragment-admin-exit" unremovable="false" hidden="false" immutable="false" ID="n3"/>
+  <folder hidden="false" immutable="false" name="Root folder" type="root" unremovable="true">
+    <folder hidden="true" immutable="true" name="Header folder" type="header" unremovable="true">
+      <channel fname="fragment-admin-exit" unremovable="false" hidden="false" immutable="false"/>
     </folder>
-    <folder ID="s4" hidden="false" immutable="false" name="Footer folder" type="footer" unremovable="false"/>
-    <folder ID="s5" dlm:deleteAllowed="false" dlm:editAllowed="false" dlm:moveAllowed="false" hidden="false" immutable="false" name="Welcome" type="regular" unremovable="false">
-      <folder ID="s6" hidden="false" immutable="false" name="Column" type="regular" unremovable="false">
+    <folder hidden="false" immutable="false" name="Footer folder" type="footer" unremovable="false"/>
+    <folder hidden="false" immutable="false" name="Welcome" type="regular" unremovable="false">
+      <folder hidden="false" immutable="false" name="Column" type="regular" unremovable="false">
         <structure-attribute>
           <name>width</name>
           <value>60%</value>
         </structure-attribute>
-        <channel fname="email-preview-demo" unremovable="false" hidden="false" immutable="false" ID="n12" dlm:moveAllowed="false" dlm:deleteAllowed="false"/>
-        <channel fname="pbookmarks" unremovable="false" hidden="false" immutable="false" ID="n7" dlm:moveAllowed="false" dlm:deleteAllowed="false"/>
+        <channel fname="announcements" unremovable="false" hidden="false" immutable="false"/>
+        <channel fname="news" unremovable="false" hidden="false" immutable="false"/>
+        <channel fname="email" unremovable="false" hidden="false" immutable="false"/>
       </folder>
-      <folder ID="s9" hidden="false" immutable="false" name="Column" type="regular" unremovable="false">
+      <folder hidden="false" immutable="false" name="Column" type="regular" unremovable="false">
         <structure-attribute>
           <name>width</name>
           <value>40%</value>
         </structure-attribute>
-        <channel fname="weather" unremovable="false" hidden="false" immutable="false" ID="n10"/>
-        <channel fname="calendar" unremovable="false" hidden="false" immutable="false" ID="n11"/>
+        <channel fname="weather" unremovable="false" hidden="false" immutable="false"/>
+        <channel fname="calendar" unremovable="false" hidden="false" immutable="false"/>
+        <channel fname="search" unremovable="false" hidden="false" immutable="false"/>
       </folder>
     </folder>
   </folder>

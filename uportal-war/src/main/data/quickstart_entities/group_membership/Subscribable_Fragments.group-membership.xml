@@ -26,6 +26,6 @@
   <description>These are fragment layout owner accounts</description>
   <children>
     <literal>ent-lo</literal>
-    <literal>news-lo</literal>
+    <literal>uportal-lo</literal>
   </children>
 </group>

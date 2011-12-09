@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Licensed to Jasig under one or more contributor license
@@ -19,13 +18,12 @@
     under the License.
 
 -->
-<group script="classpath://org/jasig/portal/io/import-group_membership_v3-2.crn">
-  <name>Faculty</name>
-  <entity-type>org.jasig.portal.security.IPerson</entity-type>
-  <creator>system</creator>
-  <description>All Faculty</description>
-  <children>
-    <literal>faculty1</literal>
-    <literal>faculty-lo</literal>
-  </children>
-</group>
+
+
+<user script="classpath://org/jasig/portal/io/import-user_v3-2.crn" username="unicon-lo">
+  <default-user>defaultTemplateUser</default-user>
+  <person-directory>
+    <givenName>Unicon</givenName>
+    <sn>Layout Owner</sn>
+  </person-directory>
+</user>

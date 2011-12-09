@@ -20,12 +20,12 @@
 
 -->
 <group script="classpath://org/jasig/portal/io/import-group_membership_v3-2.crn">
-  <name>Faculty</name>
+  <name>Demo Users</name>
   <entity-type>org.jasig.portal.security.IPerson</entity-type>
   <creator>system</creator>
-  <description>All Faculty</description>
+  <description>All users created for demonstration purposes</description>
   <children>
+    <literal>student1</literal>
     <literal>faculty1</literal>
-    <literal>faculty-lo</literal>
   </children>
 </group>
