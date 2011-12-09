@@ -59,6 +59,12 @@
             <groupId>org.jasypt</groupId> 
             <artifactId>jasypt</artifactId>  
         </dependency> 
+
+		<dependency>
+		     <groupId>org.jasig.cas</groupId>
+		     <artifactId>cas-server-support-ldap</artifactId>
+		     <version>${cas-server.version}</version>
+		</dependency>
         
         <!-- ===== Provided Dependencies ============================== -->
         <dependency>
@@ -160,6 +166,15 @@
 
     <build>
         <finalName>cas</finalName>
+        <filters>
+                   <filter>${basedir}/../../${filters.file}</filter>
+                </filters>
+                <resources>
+                   <resource>
+                      <directory>src/main/resources</directory>
+                      <filtering>true</filtering>
+                   </resource>
+                </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
@@ -169,6 +184,12 @@
                         <filter>${basedir}/../../${filters.file}</filter>
                         <filter>${basedir}/../../uportal-war/target/classes/properties/rdbm.properties</filter>
                     </filters>
+		      <resources>
+		          <resource>
+		              <directory>src/main/resources</directory>
+		              <filtering>true</filtering>
+		          </resource>
+		      </resources>
 
                     <overlays>
                         <overlay>

@@ -171,7 +171,13 @@ public class PersonLookupHelperImpl implements IPersonLookupHelper {
         }
         
         // get the set of people matching the search query
-        final Set<IPersonAttributes> people = this.personAttributeDao.getPeople(inUseQuery);
+        final Set<IPersonAttributes> people = new HashSet<IPersonAttributes>();
+        people.addAll(this.personAttributeDao.getPeople(inUseQuery));
+
+        for (String attr : query.keySet()) {
+	        inUseQuery.put(attr, "*" + ((String) query.get(attr)).replace(" ", "*") + "*");
+        }
+        people.addAll(this.personAttributeDao.getPeople(inUseQuery));
 
         // for each returned match, check to see if the current user has 
         // permissions to view this user
@@ -191,9 +197,9 @@ public class PersonLookupHelperImpl implements IPersonLookupHelper {
         
         // limit the list to a maximum of 10 returned results
         // TODO: make this limit configurable
-        if (list.size() > 10) {
-            list = list.subList(0, 9);
-        }
+        // if (list.size() > 10) {
+        //     list = list.subList(0, 9);
+        // }
         
         return list;
     }

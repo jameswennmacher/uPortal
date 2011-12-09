@@ -16,12 +16,18 @@
     <description>Parent package for portlets deployed with uPortal.</description>
 
     <modules>
+        <module>Announcements</module>
+        <module>AthleticsPortlet</module>
         <module>BookmarksPortlet</module>
+        <module>CalendarPortlet</module>
         <module>cas</module>
         <module>cas-proxy-test-portlet</module>
+        <module>CoursesPortlet</module>
+        <module>DiningMenusPortlet</module>
         <module>email-preview</module>
         <module>FunctionalTestsPortlet</module>
         <module>jasig-widget-portlets</module>
+        <module>MapPortlet</module>
         <module>pluto-testsuite</module>
         <module>NewsReaderPortlet</module>
         <module>SimpleContentPortlet</module>

@@ -479,7 +479,10 @@
                     <include>properties/portal.properties</include>
                     <include>properties/rdbm.properties</include>
                     <include>properties/security.properties</include>
+                    <include>properties/contexts/ldapContext.xml</include>
+                    <include>properties/contexts/personDirectoryContext.xml</include>
                     <include>properties/contexts/userContext.xml</include>
+                    <include>properties/groups/SmartLdapGroupStoreConfig.xml</include>
                 </includes>
             </resource>
             <!-- 
@@ -493,6 +496,10 @@
                     <exclude>properties/rdbm.properties</exclude>
                     <exclude>properties/security.properties</exclude>
                     <exclude>properties/contexts/userContext.xml</exclude>
+                    <exclude>properties/contexts/ldapContext.xml</exclude>
+                    <exclude>properties/contexts/personDirectoryContext.xml</exclude>
+                    <exclude>properties/contexts/userContext.xml</exclude>
+                    <exclude>properties/groups/SmartLdapGroupStoreConfig.xml</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -640,6 +647,17 @@
                     </filters>
                     <attachClasses>true</attachClasses>
                     <webXml>${war-plugin-webxml-source}</webXml>
+                    <webResources>
+                        <resource>
+                            <filtering>true</filtering>
+                            <directory>${basedir}/src/main/webapp</directory>
+                            <includes>
+                                <!--include>META-INF/context.xml</include>
+                                <include>WEB-INF/web.xml</include-->
+                                <include>WEB-INF/log4j.properties</include>
+                            </includes>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
             <plugin>

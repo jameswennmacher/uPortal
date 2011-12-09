@@ -31,31 +31,26 @@
    | allowExpandedContent   ->  org.jasig.portal.layout.dlm.allowExpandedContent
    +-->
   
-  <dlm:fragment name='Guests' ownerID='guest-lo' precedence='80'>
+  <!--dlm:fragment name='Guests' ownerID='guest-lo' precedence='80'>
     <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.GuestUserEvaluatorFactory'/>
-  </dlm:fragment>
+  </dlm:fragment-->
   
   <dlm:fragment name='Welcome' ownerID='welcome-lo' precedence='80'>
-    <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.PersonEvaluatorFactory'>
-    <paren mode="AND">
-      <paren mode="NOT">
-        <attribute name="username" mode='equals' value='guest'/>
-      </paren>
-      <paren mode="NOT">
-        <attribute name="username" mode='equals' value='admin'/>
-      </paren>
+    <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.GroupMembershipEvaluatorFactory'>
+      <paren mode="NOT">     
+        <attribute mode='memberOf' name='Portal Administrators'/>
       </paren>
     </dlm:audience>
   </dlm:fragment>
 
-  <dlm:fragment name='News' ownerID='news-lo' precedence='60' description="Current world news resources">
+  <!--dlm:fragment name='News' ownerID='news-lo' precedence='60' description="Current world news resources">
     <dlm:audience evaluatorFactory="org.jasig.portal.layout.dlm.providers.SubscribedTabEvaluatorFactory"/>
-  </dlm:fragment>
+  </dlm:fragment-->
   
   <dlm:fragment name='Entertainment' ownerID='ent-lo' precedence='60' description="Games, humor, and entertainment news">
     <dlm:audience evaluatorFactory="org.jasig.portal.layout.dlm.providers.SubscribedTabEvaluatorFactory"/>
   </dlm:fragment>
-  
+
   <dlm:fragment name='Academics' ownerID='academics-lo' precedence='50'>
     <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.GroupMembershipEvaluatorFactory'>
       <paren mode="OR">     
@@ -67,9 +62,9 @@
   
   <dlm:fragment name='Campus' ownerID='campus-lo' precedence='40'>
     <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.GroupMembershipEvaluatorFactory'>
-      <paren mode="OR">     
-        <attribute mode='memberOf' name='Students'/>
-        <attribute mode='memberOf' name='Faculty'/>
+      <paren mode="NOT">     
+        <attribute mode='memberOf' name='Employees'/>
+        <attribute mode='memberOf' name='Portal Administrators'/>
       </paren>
     </dlm:audience>
   </dlm:fragment>
@@ -91,13 +86,25 @@
     </dlm:audience>
   </dlm:fragment>
 
-  <dlm:fragment name='Developer' ownerID='developer-lo' precedence='40'>
+  <!--dlm:fragment name='Developer' ownerID='developer-lo' precedence='40'>
     <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.GroupMembershipEvaluatorFactory'>
       <paren mode="OR">     
         <attribute mode='memberOf' name='Portal Developers'/>
       </paren>
     </dlm:audience>
+  </dlm:fragment-->
+
+  <dlm:fragment name='Unicon' ownerID='unicon-lo' precedence='30'>
+    <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.GroupMembershipEvaluatorFactory'>
+      <paren mode="OR">
+        <attribute mode='memberOf' name='Employees'/>
+      </paren>
+    </dlm:audience>
+  </dlm:fragment> 
+ 
+  <dlm:fragment name='uPortal' ownerID='uportal-lo' precedence='20' description="uPortal Developer Resources">
+    <dlm:audience evaluatorFactory="org.jasig.portal.layout.dlm.providers.SubscribedTabEvaluatorFactory"/>
   </dlm:fragment>
-  
+    
 </managedLayoutFragments>
 

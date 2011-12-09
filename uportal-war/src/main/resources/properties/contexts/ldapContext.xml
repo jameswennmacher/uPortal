@@ -43,14 +43,13 @@
     <bean id="defaultLdapServer" class="org.jasig.portal.ldap.ContextSourceLdapServerImpl">
         <property name="contextSource">
             <bean id="legacyLdapContext" class="org.springframework.ldap.core.support.LdapContextSource">    
-                <property name="url" value="ldap://ldap.myuniv.edu:389"/>
-                <property name="userName" value="cn=AuthUser, ou=People, dc=myuniv, dc=edu"/>
-                <property name="password" value="foobar"/>
-                <property name="pooled" value="false"/>
+                <property name="url" value="${environment.build.ldap.url}"/>
+                <property name="userName" value="${environment.build.ldap.username}"/>
+                <property name="password" value="${environment.build.ldap.password}"/>
+                <property name="pooled" value="true"/>
             </bean>
         </property>
-        <property name="uidAttribute" value="uid"/>
-        <property name="baseDN" value="ou=People, dc=myuniv, dc=edu"/>
+        <property name="uidAttribute" value="${environment.build.ldap.uidattribute}"/>
     </bean>
     -->
     
@@ -59,13 +58,11 @@
      | Required for:
      |  - Person Directory LDAP Attributes
      +-->
-    <!-- 
     <bean id="defaultLdapContext" class="org.springframework.ldap.core.support.LdapContextSource">
-        <property name="url" value="ldap://ldap.myuniv.edu:389"/>
-        <property name="base" value="ou=People, dc=myuniv, dc=edu"/>
-        <property name="userName" value="cn=AuthUser, ou=People, dc=myuniv, dc=edu"/>
-        <property name="password" value="foobar"/>
-        <property name="pooled" value="false"/>
+        <property name="url" value="${environment.build.ldap.url}"/>
+        <property name="userName" value="${environment.build.ldap.username}"/>
+        <property name="password" value="${environment.build.ldap.password}"/>
+        <property name="pooled" value="true"/>
     </bean>
-    -->
+
 </beans>

@@ -85,7 +85,6 @@ This list of component group services is processed by the composite, or "root" s
  | an LDAP directory and makes them available in the portal.  You can read about 
  | this technology here:  http://www.ja-sig.org/wiki/x/3QPI   
  +-->
-<!--
   <service>
     <name>smartldap</name>
     <service_factory>org.jasig.portal.groups.ReferenceIndividualGroupServiceFactory</service_factory>
@@ -95,7 +94,6 @@ This list of component group services is processed by the composite, or "root" s
     <internally_managed>false</internally_managed>
     <caching_enabled>true</caching_enabled>
   </service>
--->
 
 <!--  
  | Uncomment to configure a Grouper group service component.  Be sure to edit 

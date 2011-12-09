@@ -80,9 +80,9 @@
             <param-name>exceptionOnValidationFailure</param-name>
             <param-value>false</param-value>
         </init-param>
-        <!--init-param>
+        <init-param>
             <param-name>allowedProxyChains</param-name> <param-value>${environment.build.uportal.protocol}://${environment.build.uportal.server}${environment.build.uportal.context}/CasProxyServlet</param-value>
-        </init-param-->
+        </init-param>
         <init-param>
             <param-name>useSession</param-name>
             <param-value>false</param-value>

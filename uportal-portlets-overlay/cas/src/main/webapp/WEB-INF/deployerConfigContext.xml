@@ -104,7 +104,7 @@
 				<bean class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
 					p:httpClient-ref="httpClient" >
 					<!-- THIS IS NOT SECURE.  PLEASE CHANGE BEFORE DEPLOYING TO PRODUCTION ENVIRONMENTS. -->
-					<property name="requireSecure" value="false"/>
+					<property name="requireSecure" value="true"/>
 				</bean>
 				<!--
 					| This is the authentication handler declaration that every CAS deployer will need to change before deploying CAS 
@@ -116,16 +116,31 @@
 				<bean
 					class="org.jasig.portal.cas.authentication.handler.support.PersonDirAuthenticationHandler" 
                     p:user-password-dao-ref="userPasswordDao" />
+				<!-- 
+					| This authentication handler will allow login via the Unicon Active Directory server
+					+-->
+				<bean class="org.jasig.cas.adaptors.ldap.BindLdapAuthenticationHandler">
+					<property name="filter" value="${environment.build.ldap.uidattribute}=%u" />
+					<property name="searchBase" value="${environment.build.ldap.userbase}" />
+					<property name="contextSource" ref="ldapContextSource" />
+					<property name="ignorePartialResultException" value="yes" />
+				</bean>
+                                <bean class="org.jasig.cas.adaptors.ldap.BindLdapAuthenticationHandler">
+                                        <property name="filter" value="${environment.build.ldap.uidattribute}=%u" />
+                                        <property name="searchBase" value="${environment.build.ldap.resourcebase}" />
+                                        <property name="contextSource" ref="ldapContextSource" />
+                                        <property name="ignorePartialResultException" value="yes" />
+                                </bean>
 			</list>
 		</property>
         
-        <!--<property name="authenticationMetaDataPopulators">
+        <property name="authenticationMetaDataPopulators">
            <list>
               <bean class="org.jasig.cas3.extensions.clearpass.CacheCredentialsMetaDataPopulator">
                  <constructor-arg index="0" ref="credentialsCache" />
               </bean>
            </list>
-        </property>-->
+        </property>
 	</bean>
     
     <bean id="userPasswordDao" class="org.jasig.portal.cas.authentication.handler.support.PortalPersonDirUserPasswordDao" 
@@ -142,6 +157,22 @@
         <property name="maxActive" value="16" />
     </bean>
 
+	<bean id="ldapContextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+		<property name="pooled" value="true"/>
+		<property name="url" value="${environment.build.ldap.url}"/>
+		<property name="userDn" value="${environment.build.ldap.username}"/>
+		<property name="password" value="${environment.build.ldap.password}"/>
+		<property name="baseEnvironmentProperties">
+			<map>
+				<entry>
+					<key>
+						<value>java.naming.security.authentication</value>
+					</key>
+					<value>simple</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
 
 	<!--
 	This bean defines the security roles for the Services Management application.  Simple deployments can use the in-memory version.

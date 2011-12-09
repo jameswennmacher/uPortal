@@ -50,7 +50,7 @@
     -->
     
     <!--bean id="weatherDaoImpl" class="org.jasig.portlet.weather.dao.worldwide.WorldWeatherOnlineDaoImpl">
-        <property name="key" value="YOURKEY"/>
+        <property name="key" value="${environment.build.uportal.weatherportlet.api}"/>
         <property name="imageMapping"><value>classpath:wwo-image-mapping.properties</value></property>
     </bean-->
     
@@ -59,7 +59,7 @@
     -->
     
     <bean id="weatherDaoImpl" class="org.jasig.portlet.weather.dao.yahoo.YahooWeatherDaoImpl">
-        <property name="key" value="YOURKEY"/>
+        <property name="key" value="${environment.build.uportal.weatherportlet.api}"/>
         <property name="weatherParsingService" ref="weatherParsingService"/>
         <property name="locationParsingService" ref="locationParsingService"/>
     </bean>

@@ -1,0 +1,12 @@
+<predefined-calendar script="classpath:/org/jasig/portlet/calendar/io/import-PredefinedCalendarDefinition_v1-0.crn.xml">
+  <fname>zimbra</fname>
+  <className>basicAuthUrlTemplateHttpIcalAdapter</className>
+  <name>Zimbra</name>
+  <parameters>
+    <parameter name="url">https://zimbra.unicon.net/home/@USERNAME@/Calendar</parameter>
+  </parameters>
+  <predefinedRoles>
+    <role>Employees</role>
+    <role>Demo Users</role>
+  </predefinedRoles>
+</predefined-calendar>

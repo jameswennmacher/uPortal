@@ -91,16 +91,15 @@
     </bean>
 
     <util:list id="directoryQueryAttributes">
-        <value>givenName</value>
-        <value>sn</value>
+        <value>displayName</value>
     </util:list>
 
     <util:map id="directoryDisplayAttributes">
         <entry key="title" value="GENERIC"/>
         <entry key="department" value="GENERIC"/>
-        <entry key="organization" value="GENERIC"/>
         <entry key="mail" value="EMAIL"/>
         <entry key="telephoneNumber" value="PHONE"/>
+        <entry key="mobile" value="PHONE"/>
         <entry key="postalAddress" value="MAP"/>
     </util:map>
 

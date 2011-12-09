@@ -33,7 +33,41 @@
     
 
     <build>
+        <filters>
+            <filter>${basedir}/../../${filters.file}</filter>
+        </filters>
+        <resources>
+          <resource>
+              <directory>src/main/resources</directory>
+              <filtering>true</filtering>
+          </resource>
+        </resources>
+
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <dependentWarExcludes>
+                        WEB-INF/lib/hsqldb-*.jar
+                    </dependentWarExcludes>
+                   <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <filters>
+                        <filter>${basedir}/../../${filters.file}</filter>
+                    </filters>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <includes>
+                                <include>WEB-INF/log4j.properties</include>
+                                <include>WEB-INF/context/applicationContext.xml</include>
+                            </includes>
+                            <filtering>true</filtering>
+                        </resource>
+                   </webResources>
+               </configuration>
+           </plugin>
+
            <plugin>
                 <groupId>org.apache.portals.pluto</groupId>
                 <artifactId>maven-pluto-plugin</artifactId>
