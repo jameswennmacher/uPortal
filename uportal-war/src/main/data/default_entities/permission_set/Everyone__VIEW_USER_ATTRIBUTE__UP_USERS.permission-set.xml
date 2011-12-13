@@ -51,6 +51,9 @@
                                                 <literal>telephoneNumber</literal>
                                             </target>
   <target permission-type="GRANT">
+                                                <literal>mobile</literal>
+                                            </target>
+  <target permission-type="GRANT">
                                                 <literal>title</literal>
                                             </target>
   <target permission-type="GRANT">
