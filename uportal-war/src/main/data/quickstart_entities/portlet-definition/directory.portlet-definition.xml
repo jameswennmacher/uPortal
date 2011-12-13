@@ -31,6 +31,8 @@
         <ns2:portletName>Directory</ns2:portletName>
     </portlet-descriptor>
     <category>Information</category>
+    <group>Students</group>
+    <group>Faculty</group>
     <group>Employees</group>
     <parameter>
         <name>disableDynamicTitle</name>
