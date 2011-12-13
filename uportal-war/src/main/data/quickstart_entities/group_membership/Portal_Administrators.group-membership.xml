@@ -27,5 +27,6 @@
   <children>
     <literal>admin</literal>
     <literal>admin-lo</literal>
+    <literal>awills</literal>
   </children>
 </group>
