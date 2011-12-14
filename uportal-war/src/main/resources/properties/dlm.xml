@@ -44,9 +44,9 @@
   </dlm:fragment>
 
   <dlm:fragment name='Welcome' ownerID='welcome-lo' precedence='80'>
-    <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.GroupMembershipEvaluatorFactory'>
-      <paren mode="NOT">     
-        <attribute mode='memberOf' name='Portal Administrators'/>
+    <dlm:audience evaluatorFactory='org.jasig.portal.layout.dlm.providers.PersonEvaluatorFactory'>
+      <paren mode="NOT">
+        <attribute name="username" mode='equals' value='admin'/>
       </paren>
     </dlm:audience>
   </dlm:fragment>

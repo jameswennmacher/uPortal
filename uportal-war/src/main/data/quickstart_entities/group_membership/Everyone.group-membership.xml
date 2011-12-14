@@ -30,6 +30,7 @@
     <group>Faculty</group>
     <group>Guests</group>
     <group>Portal System</group>
+    <group>SmartLdap ROOT</group>
     <group>Staff</group>
     <group>Students</group>
   </children>
