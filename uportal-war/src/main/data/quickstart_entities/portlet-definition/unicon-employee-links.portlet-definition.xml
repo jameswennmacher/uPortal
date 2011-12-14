@@ -71,9 +71,6 @@
 			    <div id="${n}search" class="portlet-section" role="region">
 
 			      <div class="portlet-section-body">
-		              <div class="titlebar">
-		                <h3 class="title">Unicon Links</h3>
-		              </div>
 		              <div class="content">
 		                <ul data-role="listview">
 		                    <li><a target="_blank" href="https://zimbra.unicon.net/">Zimbra</a></li>
