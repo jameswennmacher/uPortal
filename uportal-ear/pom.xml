@@ -25,13 +25,6 @@
         
         <dependency>
             <groupId>org.jasig.portal.portlets-overlay</groupId>
-            <artifactId>AthleticsPortlet</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jasig.portal.portlets-overlay</groupId>
             <artifactId>Announcements</artifactId>
             <version>${project.version}</version>
             <type>war</type>
@@ -47,6 +40,13 @@
         <dependency>
             <groupId>org.jasig.portal.portlets-overlay</groupId>
             <artifactId>CalendarPortlet</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.portal.portlets-overlay</groupId>
+            <artifactId>CampusLifePortlets</artifactId>
             <version>${project.version}</version>
             <type>war</type>
         </dependency>
@@ -75,13 +75,6 @@
         <dependency>
             <groupId>org.jasig.portal.portlets-overlay</groupId>
             <artifactId>CoursesPortlet</artifactId>
-            <version>${project.version}</version>
-            <type>war</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jasig.portal.portlets-overlay</groupId>
-            <artifactId>DiningMenusPortlet</artifactId>
             <version>${project.version}</version>
             <type>war</type>
         </dependency>
@@ -212,12 +205,6 @@
                         </webModule>
                         <webModule>
                             <groupId>org.jasig.portal.portlets-overlay</groupId>
-                            <artifactId>AthleticsPortlet</artifactId>
-                            <bundleFileName>AthleticsPortlet.war</bundleFileName>
-                            <contextRoot>/AthleticsPortlet</contextRoot>
-                        </webModule>
-                        <webModule>
-                            <groupId>org.jasig.portal.portlets-overlay</groupId>
                             <artifactId>Announcements</artifactId>
                             <bundleFileName>Announcements.war</bundleFileName>
                             <contextRoot>/Announcements</contextRoot>
@@ -233,6 +220,12 @@
                             <artifactId>CalendarPortlet</artifactId>
                             <bundleFileName>CalendarPortlet.war</bundleFileName>
                             <contextRoot>/CalendarPortlet</contextRoot>
+                        </webModule>
+                        <webModule>
+                            <groupId>org.jasig.portal.portlets-overlay</groupId>
+                            <artifactId>CampusLifePortlets</artifactId>
+                            <bundleFileName>CampusLifePortlets.war</bundleFileName>
+                            <contextRoot>/CampusLifePortlets</contextRoot>
                         </webModule>
                         <webModule>
                             <groupId>org.jasig.portal.portlets-overlay</groupId>
@@ -257,12 +250,6 @@
                             <artifactId>CoursesPortlet</artifactId>
                             <bundleFileName>CoursesPortlet.war</bundleFileName>
                             <contextRoot>/CoursesPortlet</contextRoot>
-                        </webModule>
-                        <webModule>
-                            <groupId>org.jasig.portal.portlets-overlay</groupId>
-                            <artifactId>DiningMenusPortlet</artifactId>
-                            <bundleFileName>DiningMenusPortlet.war</bundleFileName>
-                            <contextRoot>/DiningMenusPortlet</contextRoot>
                         </webModule>
                         <webModule>
                             <groupId>org.jasig.portal.portlets-overlay</groupId>

@@ -17,13 +17,12 @@
 
     <modules>
         <module>Announcements</module>
-        <module>AthleticsPortlet</module>
         <module>BookmarksPortlet</module>
         <module>CalendarPortlet</module>
+        <module>CampusLifePortlets</module>
         <module>cas</module>
         <module>cas-proxy-test-portlet</module>
         <module>CoursesPortlet</module>
-        <module>DiningMenusPortlet</module>
         <module>email-preview</module>
         <module>FunctionalTestsPortlet</module>
         <module>jasig-widget-portlets</module>

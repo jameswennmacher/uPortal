@@ -8,23 +8,21 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>AthleticsPortlet</artifactId>
+    <artifactId>CampusLifePortlets</artifactId>
     <packaging>war</packaging>
 
-    <name>Athletics Portlet</name>
-    <description>Overlay on Athletics Portlet.</description>
+    <name>Campus Life Portlets</name>
+    <description>Overlay on Campus Life Portlets.</description>
 
     <dependencies>
         <!-- ===== Compile Time Dependencies ============================== -->
         <dependency>
-            <groupId>org.jasig.portlet.athletics</groupId>
-            <artifactId>AthleticsPortlet</artifactId>
-            <version>${AthleticsPortlet.version}</version>
+            <groupId>org.jasig.portlet.campus</groupId>
+            <artifactId>CampusLifePortlets</artifactId>
+            <version>${CampusLifePortlets.version}</version>
             <type>war</type>
         </dependency>
-        
     </dependencies>
-    
 
     <build>
         <plugins>
@@ -34,5 +32,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
