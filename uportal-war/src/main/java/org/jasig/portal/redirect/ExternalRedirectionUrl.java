@@ -16,21 +16,36 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-package org.jasig.portal.concurrency.locking;
-
-import java.util.concurrent.locks.ReentrantLock;
+package org.jasig.portal.redirect;
 
 /**
- * Used for testing the DB side of the locking logic
+ * ExternalRedirectionUrl represents a non-portlet URL target for the redirection
+ * service. 
  * 
- * @author Eric Dalquist
- * @version $Revision$
+ * @author Jen Bourey, jennifer.bourey@gmail.com
  */
-public class DbOnlyClusterLockServiceImpl extends ClusterLockServiceImpl {
-    @Override
-    protected ReentrantLock getLocalLock(String mutexName) {
-        //Returning a new lock every time results in no local locking
-        return new ReentrantLock();
+public class ExternalRedirectionUrl extends AbstractRedirectionUrl {
+
+    private String url;
+
+    /**
+     * String representation of an absolute URL.  This url cannot be relative
+     * and should not include any parameters in the string.
+     * 
+     * @return
+     */
+    public String getUrl() {
+        return url;
     }
+
+    /**
+     * Sets the string representation of an absolute URL.  This url cannot be relative
+     * and should not include any parameters in the string.
+     * 
+     * @return
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
 }

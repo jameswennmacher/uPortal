@@ -16,21 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-package org.jasig.portal.concurrency.locking;
-
-import java.util.concurrent.locks.ReentrantLock;
+package org.jasig.portal.redirect;
 
 /**
- * Used for testing the DB side of the locking logic
+ * IRedirectionUrl represents a target URL in the redirection service.
  * 
- * @author Eric Dalquist
- * @version $Revision$
+ * @author Jen Bourey, jennifer.bourey@gmail.com
  */
-public class DbOnlyClusterLockServiceImpl extends ClusterLockServiceImpl {
-    @Override
-    protected ReentrantLock getLocalLock(String mutexName) {
-        //Returning a new lock every time results in no local locking
-        return new ReentrantLock();
-    }
+public interface IRedirectionUrl {
+
 }
