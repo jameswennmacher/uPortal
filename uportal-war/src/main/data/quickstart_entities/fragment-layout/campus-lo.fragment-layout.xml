@@ -34,6 +34,7 @@
         <channel fname="directory" unremovable="false" hidden="false" immutable="false"/>
         <channel fname="dining" unremovable="false" hidden="false" immutable="false"/>
         <channel fname="computer-labs" unremovable="false" hidden="false" immutable="false"/>
+        <channel fname="laundry" unremovable="false" hidden="false" immutable="false"/>
         <channel fname="athletics" unremovable="false" hidden="false" immutable="false"/>
       </folder>
       <folder hidden="false" immutable="false" name="Column 2" type="regular" unremovable="false">

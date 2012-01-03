@@ -114,7 +114,7 @@
         <email-preview.version>1.1.0</email-preview.version>
         <FunctionalTestsPortlet.version>1.1.0-RC1</FunctionalTestsPortlet.version>
         <jasig-widget-portlets.version>1.0.1</jasig-widget-portlets.version>
-        <MapPortlet.version>1.0.0-M1</MapPortlet.version>
+        <MapPortlet.version>1.0.0-M2-SNAPSHOT</MapPortlet.version>
         <NewsReaderPortlet.version>3.0.1-SNAPSHOT</NewsReaderPortlet.version>
         <SimpleContentPortlet.version>1.0.2</SimpleContentPortlet.version>
         <WeatherPortlet.version>1.0.8</WeatherPortlet.version>
