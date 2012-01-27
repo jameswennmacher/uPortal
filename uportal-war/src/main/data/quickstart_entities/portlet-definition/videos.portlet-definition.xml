@@ -46,6 +46,6 @@
     </parameter>
     <portlet-preference>
         <name>usernames</name>
-        <value>OhioUniv</value>
+        <value>UChicago</value>
     </portlet-preference>
 </portlet-definition>
