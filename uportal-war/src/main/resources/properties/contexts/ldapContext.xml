@@ -60,7 +60,7 @@
      +-->
     <bean id="defaultLdapContext" class="org.springframework.ldap.core.support.LdapContextSource">
         <property name="url" value="${environment.build.ldap.url}"/>
-        <property name="userName" value="${environment.build.ldap.username}"/>
+        <property name="userDn" value="${environment.build.ldap.username}"/>
         <property name="password" value="${environment.build.ldap.password}"/>
         <property name="pooled" value="true"/>
     </bean>
