@@ -642,16 +642,8 @@ else {
         </antcall>
         <antcall target="mvn">
             <param name="pomDir" value="${basedir}/uportal-portlets-overlay/CalendarPortlet" />
-            <param name="goal" value="package" />
-        </antcall>
-        <antcall target="mvn">
-            <param name="pomDir" value="${basedir}/uportal-portlets-overlay/CalendarPortlet" />
             <param name="goal" value="antrun:run" />
             <param name="portlet-data-import" value="true"/>
-        </antcall>
-        <antcall target="mvn">
-            <param name="pomDir" value="${basedir}/uportal-portlets-overlay/NewsReaderPortlet" />
-            <param name="goal" value="package" />
         </antcall>
         <antcall target="mvn">
             <param name="pomDir" value="${basedir}/uportal-portlets-overlay/NewsReaderPortlet" />
