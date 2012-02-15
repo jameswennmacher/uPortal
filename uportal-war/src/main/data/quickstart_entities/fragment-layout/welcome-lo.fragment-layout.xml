@@ -42,7 +42,6 @@
         </structure-attribute>
         <channel fname="weather" unremovable="false" hidden="false" immutable="false"/>
         <channel fname="calendar" unremovable="false" hidden="false" immutable="false"/>
-        <channel fname="search" unremovable="false" hidden="false" immutable="false"/>
       </folder>
     </folder>
   </folder>
