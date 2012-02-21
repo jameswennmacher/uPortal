@@ -48,4 +48,8 @@
          <name>timezone</name>
          <value>America/Phoenix</value>
      </portlet-preference>
+     <portlet-preference>
+         <name>usePortalJsLibs</name>
+         <value>true</value>
+     </portlet-preference>
 </portlet-definition>

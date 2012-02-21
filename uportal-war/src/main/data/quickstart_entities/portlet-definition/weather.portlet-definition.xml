@@ -48,6 +48,10 @@
         <name>editable</name>
         <value>true</value>
     </parameter>
+    <parameter>
+        <name>hideFromMobile</name>
+        <value>true</value>
+    </parameter>
     <portlet-preference>
         <name>locationCodes</name>
         <readOnly>false</readOnly>
