@@ -70,7 +70,7 @@
                 <value>true</value>
             </preference>
             <preference>
-                <name>portalJsLibNamespace</name>
+                <name>portalJsNamespace</name>
                 <value>up</value>
             </preference>
         </portlet-preferences>
