@@ -20,6 +20,7 @@
           <value>50%</value>
         </structure-attribute>
         <channel fname="dining" unremovable="false" hidden="false" immutable="false"/>
+        <channel fname="transit" unremovable="false" hidden="false" immutable="false"/>
       </folder>
     </folder>
   </folder>
