@@ -106,7 +106,7 @@
         <Announcements.version>1.1.0-SNAPSHOT</Announcements.version>
         <BookmarksPortlet.version>1.0.11</BookmarksPortlet.version>
         <CalendarPortlet.version>2.1.0-RC1</CalendarPortlet.version>
-        <CampusLifePortlets.version>1.0.0-M2</CampusLifePortlets.version>
+        <CampusLifePortlets.version>1.0.0-RC1</CampusLifePortlets.version>
         <cas-server.version>3.4.11</cas-server.version>
         <cas-clearpass.version>1.0.7.GA</cas-clearpass.version>
         <cas-proxy-test-portlet.version>1.0.0-RC3</cas-proxy-test-portlet.version>
