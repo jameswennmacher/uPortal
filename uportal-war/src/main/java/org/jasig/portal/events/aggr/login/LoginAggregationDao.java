@@ -39,7 +39,7 @@ public interface LoginAggregationDao<T extends LoginAggregation> {
     /**
      * login aggregations in a date range for a specified interval and group
      */
-    List<LoginAggregation> getLoginAggregations(DateMidnight start, DateMidnight end, AggregationInterval interval, AggregatedGroupMapping... aggregatedGroupMapping);
+    List<LoginAggregation> getLoginAggregations(DateMidnight start, DateMidnight end, AggregationInterval interval, AggregatedGroupMapping aggregatedGroupMapping);
 
     /**
      * @return All login aggregations for the date, time and interval

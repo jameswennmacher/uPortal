@@ -145,10 +145,10 @@ public class JpaLoginAggregationDao extends BaseJpaDao implements LoginAggregati
                         cb.and(
                                 cb.between(root.get(DateDimensionImpl_.date), startDate, endDate),
                                 cb.equal(loginAggrJoin.get(LoginAggregationImpl_.interval), intervalParameter),
-                                loginAggrJoin.get(LoginAggregationImpl_.aggregatedGroup).in(aggregatedGroupsParameter)
+                                cb.equal(loginAggrJoin.get(LoginAggregationImpl_.aggregatedGroup), aggregatedGroupParameter)
                         )
                 );
-                criteriaQuery.orderBy(cb.desc(root.get(DateDimensionImpl_.date)));
+                criteriaQuery.orderBy(cb.asc(root.get(DateDimensionImpl_.date)));
                 
                 return criteriaQuery;
             }
@@ -156,12 +156,12 @@ public class JpaLoginAggregationDao extends BaseJpaDao implements LoginAggregati
     }
     
     @Override
-    public List<LoginAggregation> getLoginAggregations(DateMidnight start, DateMidnight end, AggregationInterval interval, AggregatedGroupMapping... aggregatedGroupMapping) {
+    public List<LoginAggregation> getLoginAggregations(DateMidnight start, DateMidnight end, AggregationInterval interval, AggregatedGroupMapping aggregatedGroupMapping) {
         final TypedQuery<LoginAggregationImpl> query = this.createQuery(findLoginAggregationsByDateRangeQuery);
         query.setParameter(this.startDate, start.toLocalDate());
         query.setParameter(this.endDate, end.toLocalDate());
         query.setParameter(this.intervalParameter, interval);
-        query.setParameter(this.aggregatedGroupsParameter, ImmutableSet.copyOf(aggregatedGroupMapping));
+        query.setParameter(this.aggregatedGroupParameter, aggregatedGroupMapping);
         
         return new ArrayList<LoginAggregation>(query.getResultList());
     }

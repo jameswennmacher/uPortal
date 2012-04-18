@@ -20,23 +20,38 @@
 package org.jasig.portal.events.aggr;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jasig.portal.events.aggr.dao.DateDimensionDao;
 import org.jasig.portal.events.aggr.dao.TimeDimensionDao;
+import org.jasig.portal.events.aggr.groups.AggregatedGroupMapping;
+import org.jasig.portal.events.aggr.login.LoginAggregation;
+import org.jasig.portal.events.aggr.login.MissingLoginDataCreator;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
+
+import com.google.common.base.Function;
 
 /**
  * @author Eric Dalquist
  * @version $Revision$
  */
 @RunWith(MockitoJUnitRunner.class)
-public class IntervalHelperImplTest {
+public class AggregationIntervalHelperImplTest {
     @InjectMocks private AggregationIntervalHelperImpl helperImpl = new AggregationIntervalHelperImpl();
     @Mock private DateDimensionDao dateDimensionDao;
     @Mock private TimeDimensionDao timeDimensionDao;
@@ -219,4 +234,124 @@ public class IntervalHelperImplTest {
                 
     }
     
+    @Test
+    public void testFillInBlanks() {
+        final DateTime start = new DateMidnight(2012, 1, 1).toDateTime();
+        final DateTime end = start.plusYears(1);
+        
+        final DateDimensionDao dateDimensionDao = mock(DateDimensionDao.class);
+        when(dateDimensionDao.getDateDimensionByDate(any(DateMidnight.class)))
+            .thenAnswer(new Answer<DateDimension>() {
+                public DateDimension answer(InvocationOnMock invocation) {
+                    Object[] args = invocation.getArguments();
+                    
+                    DateMidnight date = (DateMidnight) args[0];
+                    
+                    
+                    DateDimension mock = mock(DateDimension.class);
+                    when(mock.getDate()).thenReturn(date);
+                    return mock;
+                }
+            });
+        helperImpl.setDateDimensionDao(dateDimensionDao);
+
+        final TimeDimensionDao timeDimensionDao = mock(TimeDimensionDao.class);
+        when(timeDimensionDao.getTimeDimensionByTime(any(LocalTime.class)))
+            .thenAnswer(new Answer<TimeDimension>() {
+                public TimeDimension answer(InvocationOnMock invocation) {
+                    Object[] args = invocation.getArguments();
+                    
+                    LocalTime time = (LocalTime) args[0];
+                    
+                    
+                    TimeDimension mock = mock(TimeDimension.class);
+                    when(mock.getTime()).thenReturn(time);
+                    return mock;
+                }
+            });
+        helperImpl.setTimeDimensionDao(timeDimensionDao);
+        
+
+        final List<LoginAggregation> data = new ArrayList<LoginAggregation>();
+        
+        final AggregationIntervalInfo interval1 = helperImpl.getIntervalInfo(AggregationInterval.MONTH, new DateMidnight(2012, 3, 1).toDateTime());
+        final LoginAggregation aggr1 = mock(LoginAggregation.class);
+        when(aggr1.getDateDimension()).thenReturn(interval1.getDateDimension());
+        when(aggr1.getTimeDimension()).thenReturn(interval1.getTimeDimension());
+        data.add(aggr1);
+        
+        final AggregationIntervalInfo interval2 = helperImpl.getIntervalInfo(AggregationInterval.MONTH, new DateMidnight(2012, 6, 1).toDateTime());
+        final LoginAggregation aggr2 = mock(LoginAggregation.class);
+        when(aggr2.getDateDimension()).thenReturn(interval2.getDateDimension());
+        when(aggr2.getTimeDimension()).thenReturn(interval2.getTimeDimension());
+        data.add(aggr2);
+
+        final AggregationIntervalInfo interval3 = helperImpl.getIntervalInfo(AggregationInterval.MONTH, new DateMidnight(2012, 7, 1).toDateTime());
+        final LoginAggregation aggr3 = mock(LoginAggregation.class);
+        when(aggr3.getDateDimension()).thenReturn(interval3.getDateDimension());
+        when(aggr3.getTimeDimension()).thenReturn(interval3.getTimeDimension());
+        data.add(aggr3);
+        
+        final Function<AggregationIntervalInfo, LoginAggregation> missingDataCreator = new MissingLoginDataCreator(mock(AggregatedGroupMapping.class));
+        
+        final List<LoginAggregation> complete = helperImpl.fillInBlanks(AggregationInterval.MONTH, start, end, data, missingDataCreator);
+        assertEquals(12, complete.size());
+        
+        final AggregationIntervalInfo interval4 = helperImpl.getIntervalInfo(AggregationInterval.MONTH, new DateMidnight(2012, 12, 1).toDateTime());
+        final LoginAggregation aggr4 = mock(LoginAggregation.class);
+        when(aggr4.getDateDimension()).thenReturn(interval4.getDateDimension());
+        when(aggr4.getTimeDimension()).thenReturn(interval4.getTimeDimension());
+        data.add(aggr4);
+        
+        final List<LoginAggregation> complete2 = helperImpl.fillInBlanks(AggregationInterval.MONTH, start, end, data, missingDataCreator);
+        assertEquals(12, complete2.size());
+
+    }
+    
+
+    @Test
+    public void testFillInBlanksNoData() {
+        final DateTime start = new DateMidnight(2012, 1, 1).toDateTime();
+        final DateTime end = start.plusYears(1);
+        
+        final DateDimensionDao dateDimensionDao = mock(DateDimensionDao.class);
+        when(dateDimensionDao.getDateDimensionByDate(any(DateMidnight.class)))
+            .thenAnswer(new Answer<DateDimension>() {
+                public DateDimension answer(InvocationOnMock invocation) {
+                    Object[] args = invocation.getArguments();
+                    
+                    DateMidnight date = (DateMidnight) args[0];
+                    
+                    
+                    DateDimension mock = mock(DateDimension.class);
+                    when(mock.getDate()).thenReturn(date);
+                    return mock;
+                }
+            });
+        helperImpl.setDateDimensionDao(dateDimensionDao);
+
+        final TimeDimensionDao timeDimensionDao = mock(TimeDimensionDao.class);
+        when(timeDimensionDao.getTimeDimensionByTime(any(LocalTime.class)))
+            .thenAnswer(new Answer<TimeDimension>() {
+                public TimeDimension answer(InvocationOnMock invocation) {
+                    Object[] args = invocation.getArguments();
+                    
+                    LocalTime time = (LocalTime) args[0];
+                    
+                    
+                    TimeDimension mock = mock(TimeDimension.class);
+                    when(mock.getTime()).thenReturn(time);
+                    return mock;
+                }
+            });
+        helperImpl.setTimeDimensionDao(timeDimensionDao);
+
+        final List<LoginAggregation> data = new ArrayList<LoginAggregation>();
+        final Function<AggregationIntervalInfo, LoginAggregation> missingDataCreator = new MissingLoginDataCreator(mock(AggregatedGroupMapping.class));
+        
+        final List<LoginAggregation> complete = helperImpl.fillInBlanks(AggregationInterval.MONTH, start, end, data, missingDataCreator);
+        assertEquals(12, complete.size());
+        
+    }
+
 }

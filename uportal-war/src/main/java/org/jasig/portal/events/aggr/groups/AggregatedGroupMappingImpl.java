@@ -85,6 +85,11 @@ public class AggregatedGroupMappingImpl implements AggregatedGroupMapping, Seria
     }
 
 
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
 
     @Override
     public String getGroupName() {

@@ -51,6 +51,9 @@ import com.google.common.base.Function;
 @Repository
 public class JpaAggregatedGroupLookupDao extends BaseJpaDao implements AggregatedGroupLookupDao {
     private CriteriaQuery<AggregatedGroupMappingImpl> findGroupMappingByServiceAndNameQuery;
+    private CriteriaQuery<AggregatedGroupMappingImpl> findGroupMappingByIdQuery;
+    private CriteriaQuery<AggregatedGroupMappingImpl> findAllGroupMappings;
+    private ParameterExpression<Long> mappingIdParameter;
     private ParameterExpression<String> groupServiceParameter;
     private ParameterExpression<String> groupNameParameter;
     
@@ -82,6 +85,7 @@ public class JpaAggregatedGroupLookupDao extends BaseJpaDao implements Aggregate
     public void afterPropertiesSet() throws Exception {
         this.groupServiceParameter = this.createParameterExpression(String.class, "groupService");
         this.groupNameParameter = this.createParameterExpression(String.class, "groupName");
+        this.mappingIdParameter = this.createParameterExpression(Long.class, "id");
         
         this.findGroupMappingByServiceAndNameQuery = this.createCriteriaQuery(new Function<CriteriaBuilder, CriteriaQuery<AggregatedGroupMappingImpl>>() {
             @Override
@@ -96,6 +100,32 @@ public class JpaAggregatedGroupLookupDao extends BaseJpaDao implements Aggregate
                         )
                     );
                 
+                return criteriaQuery;
+            }
+        });
+        
+        this.findGroupMappingByIdQuery = this.createCriteriaQuery(new Function<CriteriaBuilder, CriteriaQuery<AggregatedGroupMappingImpl>>() {
+            @Override
+            public CriteriaQuery<AggregatedGroupMappingImpl> apply(CriteriaBuilder cb) {
+                final CriteriaQuery<AggregatedGroupMappingImpl> criteriaQuery = cb.createQuery(AggregatedGroupMappingImpl.class);
+                final Root<AggregatedGroupMappingImpl> root = criteriaQuery.from(AggregatedGroupMappingImpl.class);
+                criteriaQuery.select(root);
+                criteriaQuery.where(
+                        cb.and(
+                            cb.equal(root.get(AggregatedGroupMappingImpl_.id), mappingIdParameter)
+                        )
+                    );
+                
+                return criteriaQuery;
+            }
+        });
+        
+        this.findAllGroupMappings = this.createCriteriaQuery(new Function<CriteriaBuilder, CriteriaQuery<AggregatedGroupMappingImpl>>() {
+            @Override
+            public CriteriaQuery<AggregatedGroupMappingImpl> apply(CriteriaBuilder cb) {
+                final CriteriaQuery<AggregatedGroupMappingImpl> criteriaQuery = cb.createQuery(AggregatedGroupMappingImpl.class);
+                final Root<AggregatedGroupMappingImpl> root = criteriaQuery.from(AggregatedGroupMappingImpl.class);
+                criteriaQuery.select(root);
                 return criteriaQuery;
             }
         });
@@ -137,5 +167,22 @@ public class JpaAggregatedGroupLookupDao extends BaseJpaDao implements Aggregate
         final String groupName = group.getName();
         
         return this.getGroupMapping(groupService, groupName);
+    }
+
+    @Override
+    public AggregatedGroupMapping getGroupMapping(final Long id) {
+        final TypedQuery<AggregatedGroupMappingImpl> query = this.createCachedQuery(this.findGroupMappingByIdQuery);
+        query.setParameter(this.mappingIdParameter, id);
+        
+        final List<? extends AggregatedGroupMapping> resultList = query.getResultList();
+        return DataAccessUtils.uniqueResult(resultList);
+    }
+
+    @Override
+    public List<? extends AggregatedGroupMapping> getAllGroupMappings() {
+        final TypedQuery<AggregatedGroupMappingImpl> query = this.createCachedQuery(this.findAllGroupMappings);
+        
+        final List<? extends AggregatedGroupMapping> resultList = query.getResultList();
+        return resultList;
     }
 }

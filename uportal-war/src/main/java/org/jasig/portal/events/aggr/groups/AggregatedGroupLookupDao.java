@@ -19,6 +19,8 @@
 
 package org.jasig.portal.events.aggr.groups;
 
+import java.util.List;
+
 /**
  * Used to map portal group keys to a more static group mapping object
  * 
@@ -26,6 +28,9 @@ package org.jasig.portal.events.aggr.groups;
  * @version $Revision$
  */
 public interface AggregatedGroupLookupDao {
+
+    public AggregatedGroupMapping getGroupMapping(Long mappingId);
+    
     /**
      * Get the group mapping object for the specified group key
      */
@@ -35,4 +40,7 @@ public interface AggregatedGroupLookupDao {
      * Get the group mapping for the specified service and name
      */
     public AggregatedGroupMapping getGroupMapping(String groupService, String groupName);
+    
+    public List<? extends AggregatedGroupMapping> getAllGroupMappings();
+
 }
