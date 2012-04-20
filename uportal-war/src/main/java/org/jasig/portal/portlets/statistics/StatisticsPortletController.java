@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.jasig.portal.events.aggr.AggregationInterval;
 import org.jasig.portal.events.aggr.AggregationIntervalHelper;
-import org.jasig.portal.events.aggr.DateDimension;
-import org.jasig.portal.events.aggr.TimeDimension;
 import org.jasig.portal.events.aggr.groups.AggregatedGroupLookupDao;
 import org.jasig.portal.events.aggr.groups.AggregatedGroupMapping;
 import org.jasig.portal.events.aggr.login.LoginAggregation;
@@ -34,10 +32,6 @@ import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 import com.google.visualization.datasource.base.TypeMismatchException;
 import com.google.visualization.datasource.datatable.ColumnDescription;
 import com.google.visualization.datasource.datatable.DataTable;
-import com.google.visualization.datasource.datatable.TableCell;
-import com.google.visualization.datasource.datatable.TableRow;
-import com.google.visualization.datasource.datatable.value.DateTimeValue;
-import com.google.visualization.datasource.datatable.value.NumberValue;
 import com.google.visualization.datasource.datatable.value.ValueType;
 
 /**
@@ -112,7 +106,11 @@ public class StatisticsPortletController {
         final DataTable table = new JsonDataTable();
         table.addColumn(new ColumnDescription("date", ValueType.DATETIME, "Date"));
 
-        final List<List<LoginAggregation>> data = new ArrayList<List<LoginAggregation>>();
+        final List<String> groupNames = new ArrayList<String>();
+        final List<String> dates = new ArrayList<String>();
+        final List<List<Integer>> data = new ArrayList<List<Integer>>();
+        
+        final DateTimeFormatter df = new DateTimeFormatterBuilder().appendPattern("M/d/yy").toFormatter();
         
         //Pull data out of form for per-group fetching
         final AggregationInterval interval = form.getInterval();
@@ -122,12 +120,14 @@ public class StatisticsPortletController {
         final DateTime endDateTime = end.toDateTime();
         
         int num = 0;
+        boolean first = true;
         //Load aggregation data for each group
         for (Long groupId : form.getGroups()) {
+            
             //Load the group data
             final AggregatedGroupMapping groupMapping = aggregatedGroupDao.getGroupMapping(groupId);
             final String groupName = groupMapping.getGroupName();
-            table.addColumn(new ColumnDescription(groupName, ValueType.NUMBER, groupName));
+            groupNames.add(groupName);
             
             //Get all the aggregations for the group
             //TODO add API to load all aggregations for set of groups
@@ -137,8 +137,17 @@ public class StatisticsPortletController {
             
             //Fill in the blanks to have a complete data set for the range
             final List<LoginAggregation> complete = intervalHelper.fillInBlanks(interval, startDateTime, endDateTime, aggrs, new MissingLoginDataCreator(groupMapping));
-            data.add(complete);
-            
+
+            List<Integer> logins = new ArrayList<Integer>();
+            for (LoginAggregation aggr : complete) {
+                logins.add(aggr.getLoginCount());
+                if (first) {
+                    final DateTime entryDate = aggr.getTimeDimension().getTime().toDateTime(aggr.getDateDimension().getDate());
+                    dates.add(df.print(entryDate));
+                }
+            }
+            data.add(logins);
+
             logger.debug("Added {} data points for group {}", complete.size(), groupName);
             
             if (num == 0) {
@@ -147,29 +156,14 @@ public class StatisticsPortletController {
             else if (num != complete.size()) {
                 throw new RuntimeException("LOGIC BUG: NOT ALL DATA SETS ARE OF EQUAL LENGTH, expected " + num + " but is " + complete.size() + " for group " + groupName);
             }
+            
+            first = false;
         }
         
-        for (int i = 0; i < num; i++) {
-            
-            // create the row
-            final TableRow row = new TableRow();
-
-            // add the date to the first cell
-            final DateDimension dateDimension = data.get(0).get(i).getDateDimension();
-            final TimeDimension timeDimension = data.get(0).get(i).getTimeDimension();
-            final DateTimeValue dateValue = new DateTimeValue(dateDimension.getYear(), dateDimension.getMonth()-1, dateDimension.getDay(), timeDimension.getHour(), timeDimension.getMinute(), 0, 0);
-            row.addCell(new TableCell(dateValue));
-            
-            for (List<LoginAggregation> groupData : data) {
-                // add the login count to the second cell
-                final LoginAggregation loginAggregation = groupData.get(i);
-                final int loginCount = loginAggregation.getLoginCount();
-                row.addCell(new TableCell(new NumberValue(loginCount)));
-            }
-            table.addRow(row);
-        }
-
-        mv.addObject("logins", table);
+        
+        mv.addObject("logins", data);
+        mv.addObject("dates", dates);
+        mv.addObject("groupNames", groupNames);
         return mv;
     }
     

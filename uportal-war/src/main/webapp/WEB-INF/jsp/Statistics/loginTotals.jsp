@@ -22,8 +22,24 @@
 <%@ taglib prefix="gvis" tagdir="/WEB-INF/tags/google-visualization" %>
 <%@ include file="/WEB-INF/jsp/include.jsp"%>
 <c:set var="n"><portlet:namespace/></c:set>
-<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAA6IxXqpYkVvIBECmLUV99fRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRKtN-K3WJJ0qPp2xOcWG-RdEe73Q"></script>
-    
+<script type="text/javascript" src="http://janwillemtulp.com/d3linechart/d3-v1.8.2.js"></script>
+    <link type="text/css" rel="stylesheet" href="grid960.css" media="all"></link>
+     
+        <style type="text/css">
+        path {
+            stroke-width: 2;
+            fill: none;
+        }
+
+        line {
+            stroke: black;
+        }
+
+        text {
+            font-family: Arial;
+            font-size: 9pt;
+        }
+    </style>   
 <!-- Portlet -->
 <div class="fl-widget portlet" role="section">
   
@@ -78,6 +94,8 @@
 <script type="text/javascript">
 
     var $ = up.jQuery;
+    
+    var linecolors = ["steelblue", "red", "green", "yellow", "purple"];
 
     var drawChart = function() {
         var queryData = {
@@ -95,13 +113,88 @@
             url: "<portlet:resourceURL/>",
             traditional: true,
             data: queryData, 
-            success: function (data) { 
-                var chart = new google.visualization.LineChart($('#${n} .chart').get(0));
-                var table = new google.visualization.DataTable(data.logins);
+            success: function (json) { 
+                var w = $("#${n} .portlet-section-body").width();
+                var h = Math.min(Math.max(w * .7, 240), 400);
                 
-                var width = $("#${n} .portlet-section-body").width();
-                var height = Math.max(width * .7, 240);
-                chart.draw(table, {width: width, height: height, is3D: true });
+                var lines = json.logins;
+                var dates = json.dates;
+                
+                var ymax = 0;
+                $(lines).each(function (idx, l) {
+                    ymax = Math.max(ymax, d3.max(lines[0]));
+                });
+                
+                
+                var margin = 20,
+                y = d3.scale.linear().domain([0, ymax]).range([0 + margin, h - margin]),
+                x = d3.scale.linear().domain([0, lines[0].length]).range([0 + margin, w - margin])
+
+                $(".chart").html("");
+                var vis = d3.select(".chart")
+                    .append("svg:svg")
+                    .attr("width", w)
+                    .attr("height", h)
+
+                var g = vis.append("svg:g")
+                    .attr("transform", "translate(0, " + h + ")");
+                
+                var line = d3.svg.line()
+                    .x(function(d,i) { return x(i); })
+                    .y(function(d) { return -1 * y(d); })
+                
+                $(lines).each(function (idx, l) {
+                    g.append("svg:path").attr("d", line(l)).attr("stroke", linecolors[idx]);
+                });
+                
+                g.append("svg:line")
+                    .attr("x1", x(0))
+                    .attr("y1", -1 * y(0))
+                    .attr("x2", x(w))
+                    .attr("y2", -1 * y(0))
+
+                g.append("svg:line")
+                    .attr("x1", x(0))
+                    .attr("y1", -1 * y(0))
+                    .attr("x2", x(0))
+                    .attr("y2", -1 * y(ymax))
+                
+                g.selectAll(".xLabel")
+                    .data(x.ticks(5))
+                    .enter().append("svg:text")
+                    .attr("class", "xLabel")
+                    .text(function(d) { return dates[d]; })
+                    .attr("x", function(d) { return x(d) })
+                    .attr("y", 0)
+                    .attr("text-anchor", "middle")
+
+                g.selectAll(".yLabel")
+                    .data(y.ticks(4))
+                    .enter().append("svg:text")
+                    .attr("class", "yLabel")
+                    .text(String)
+                    .attr("x", 0)
+                    .attr("y", function(d) { return -1 * y(d) })
+                    .attr("text-anchor", "right")
+                    .attr("dy", 4)
+                
+                g.selectAll(".xTicks")
+                    .data(x.ticks(5))
+                    .enter().append("svg:line")
+                    .attr("class", "xTicks")
+                    .attr("x1", function(d) { return x(d); })
+                    .attr("y1", -1 * y(0))
+                    .attr("x2", function(d) { return x(d); })
+                    .attr("y2", -1 * y(-0.3))
+
+                g.selectAll(".yTicks")
+                    .data(y.ticks(4))
+                    .enter().append("svg:line")
+                    .attr("class", "yTicks")
+                    .attr("y1", function(d) { return -1 * y(d); })
+                    .attr("x1", x(-0.3))
+                    .attr("y2", function(d) { return -1 * y(d); })
+                    .attr("x2", x(0))
             }, 
             dataType: "json"
         });
@@ -114,8 +207,5 @@
             return false;
         });
     });
-
-    google.load("visualization", "1.0", {packages:["corechart"]});
-    google.setOnLoadCallback(drawChart);
 
 </script>
