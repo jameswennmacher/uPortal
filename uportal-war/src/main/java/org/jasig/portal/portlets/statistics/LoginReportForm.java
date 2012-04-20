@@ -11,7 +11,7 @@ public class LoginReportForm {
     private DateMidnight start;
     private DateMidnight end;
     private AggregationInterval interval;
-    private List<String> groups = new ArrayList<String>();
+    private List<Long> groups = new ArrayList<Long>();
 
     public DateMidnight getStart() {
         return start;
@@ -37,11 +37,11 @@ public class LoginReportForm {
         this.interval = interval;
     }
 
-    public List<String> getGroups() {
+    public List<Long> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<String> groups) {
+    public void setGroups(List<Long> groups) {
         this.groups = groups;
     }
 

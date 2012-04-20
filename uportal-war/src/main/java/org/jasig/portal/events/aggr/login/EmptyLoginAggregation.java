@@ -6,8 +6,6 @@ import org.jasig.portal.events.aggr.AggregationIntervalInfo;
 import org.jasig.portal.events.aggr.DateDimension;
 import org.jasig.portal.events.aggr.TimeDimension;
 import org.jasig.portal.events.aggr.groups.AggregatedGroupMapping;
-import org.joda.time.DateTime;
-import org.joda.time.Minutes;
 
 /**
  * EmptyLoginAggregation represents a login aggregation interval with no logins.
@@ -16,47 +14,32 @@ import org.joda.time.Minutes;
  */
 public class EmptyLoginAggregation implements LoginAggregation {
 
-    private final TimeDimension timeDimension;
-    private final DateDimension dateDimension;
-    private final AggregationInterval interval;
+    private final AggregationIntervalInfo info;
     private final AggregatedGroupMapping aggregatedGroup;
     private final int duration;
 
     public EmptyLoginAggregation(AggregationIntervalInfo info, AggregatedGroupMapping aggregatedGroup) {
-        this(info.getTimeDimension(), info.getDateDimension(), info
-                .getAggregationInterval(), aggregatedGroup);
-    }
-    
-    public EmptyLoginAggregation(TimeDimension timeDimension, DateDimension dateDimension, 
-            AggregationInterval interval, AggregatedGroupMapping aggregatedGroup) {
-        Validate.notNull(timeDimension);
-        Validate.notNull(dateDimension);
-        Validate.notNull(interval);
+        Validate.notNull(info);
         Validate.notNull(aggregatedGroup);
         
-        this.timeDimension = timeDimension;
-        this.dateDimension = dateDimension;
-        this.interval = interval;
+        this.info = info;
         this.aggregatedGroup = aggregatedGroup;
-        
-        final DateTime start = timeDimension.getTime().toDateTime(dateDimension.getDate());
-        final Minutes minutes = Minutes.minutesBetween(start, start.property(this.interval.getDateTimeFieldType()).addToCopy(1));
-        duration = minutes.getMinutes();
+        this.duration = info.getDurationTo(info.getEnd());
     }
 
     @Override
     public TimeDimension getTimeDimension() {
-        return this.timeDimension;
+        return this.info.getTimeDimension();
     }
 
     @Override
     public DateDimension getDateDimension() {
-        return this.dateDimension;
+        return this.info.getDateDimension();
     }
 
     @Override
     public AggregationInterval getInterval() {
-        return this.interval;
+        return this.info.getAggregationInterval();
     }
 
     @Override

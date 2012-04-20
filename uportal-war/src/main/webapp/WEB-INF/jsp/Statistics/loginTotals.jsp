@@ -80,15 +80,21 @@
     var $ = up.jQuery;
 
     var drawChart = function() {
+        var queryData = {
+            start: $("#${n} input[name=start]").val(),
+            end: $("#${n} input[name=end]").val(),
+            interval: $("#${n} select[name=interval]").val()
+        };
+        
+        var groups = $("#${n} select[name=groups]");
+        if (groups.length > 0) {
+            queryData.groups = groups.val();
+        }
+        
         $.ajax({
             url: "<portlet:resourceURL/>",
             traditional: true,
-            data: {
-                start: $("#${n} input[name=start]").val(),
-                end: $("#${n} input[name=end]").val(),
-                interval: $("#${n} select[name=interval]").val(),
-                groups: $("#${n} select[name=groups]").val()
-            }, 
+            data: queryData, 
             success: function (data) { 
                 var chart = new google.visualization.LineChart($('#${n} .chart').get(0));
                 var table = new google.visualization.DataTable(data.logins);

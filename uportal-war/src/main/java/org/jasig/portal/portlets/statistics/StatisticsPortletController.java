@@ -15,8 +15,11 @@ import org.jasig.portal.events.aggr.login.LoginAggregation;
 import org.jasig.portal.events.aggr.login.LoginAggregationDao;
 import org.jasig.portal.events.aggr.login.MissingLoginDataCreator;
 import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,15 +49,17 @@ import com.google.visualization.datasource.datatable.value.ValueType;
 @RequestMapping("VIEW")
 public class StatisticsPortletController {
     
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+    
     protected final static String LOGIN_FORM_NAME = "loginReportRequest";
 
-    @Autowired(required = true)
+    @Autowired
     private LoginAggregationDao<? extends LoginAggregation> loginDao;
     
-    @Autowired(required = true)
+    @Autowired
     private AggregationIntervalHelper intervalHelper;
     
-    @Autowired(required = true)
+    @Autowired
     private AggregatedGroupLookupDao aggregatedGroupDao;
     
     @RenderMapping
@@ -65,7 +70,8 @@ public class StatisticsPortletController {
 
             final List<? extends AggregatedGroupMapping> groupMappings = aggregatedGroupDao.getAllGroupMappings();
             for (AggregatedGroupMapping mapping : groupMappings) {
-                report.getGroups().add(String.valueOf(mapping.getId()));
+                final List<Long> groupIds = report.getGroups();
+                groupIds.add(mapping.getId());
             }
             
             final DateMidnight today = new DateMidnight();
@@ -108,19 +114,40 @@ public class StatisticsPortletController {
 
         final List<List<LoginAggregation>> data = new ArrayList<List<LoginAggregation>>();
         
-        for (String group : form.getGroups()) {
-            
-            final Long groupId = Long.valueOf(group);
-            final AggregatedGroupMapping groupMapping = aggregatedGroupDao.getGroupMapping(groupId);
-            table.addColumn(new ColumnDescription(groupMapping.getGroupName(), ValueType.NUMBER, groupMapping.getGroupName()));
-            
-            final List<LoginAggregation> aggrs = loginDao.getLoginAggregations(
-                    form.getStart(), form.getEnd(), form.getInterval(), groupMapping);
-            final List<LoginAggregation> complete = intervalHelper.fillInBlanks(form.getInterval(), form.getStart().toDateTime(), form.getEnd().toDateTime(), aggrs, new MissingLoginDataCreator(groupMapping));
-            data.add(complete);
-        }
+        //Pull data out of form for per-group fetching
+        final AggregationInterval interval = form.getInterval();
+        final DateMidnight start = form.getStart();
+        final DateMidnight end = form.getEnd();
+        final DateTime startDateTime = start.toDateTime();
+        final DateTime endDateTime = end.toDateTime();
         
-        int num = data.get(0).size();
+        int num = 0;
+        //Load aggregation data for each group
+        for (Long groupId : form.getGroups()) {
+            //Load the group data
+            final AggregatedGroupMapping groupMapping = aggregatedGroupDao.getGroupMapping(groupId);
+            final String groupName = groupMapping.getGroupName();
+            table.addColumn(new ColumnDescription(groupName, ValueType.NUMBER, groupName));
+            
+            //Get all the aggregations for the group
+            //TODO add API to load all aggregations for set of groups
+            final List<LoginAggregation> aggrs = loginDao.getLoginAggregations(start, end, interval, groupMapping);
+            
+            logger.debug("Found {} data points for group {}", aggrs.size(), groupName);
+            
+            //Fill in the blanks to have a complete data set for the range
+            final List<LoginAggregation> complete = intervalHelper.fillInBlanks(interval, startDateTime, endDateTime, aggrs, new MissingLoginDataCreator(groupMapping));
+            data.add(complete);
+            
+            logger.debug("Added {} data points for group {}", complete.size(), groupName);
+            
+            if (num == 0) {
+                num = complete.size();
+            }
+            else if (num != complete.size()) {
+                throw new RuntimeException("LOGIC BUG: NOT ALL DATA SETS ARE OF EQUAL LENGTH, expected " + num + " but is " + complete.size() + " for group " + groupName);
+            }
+        }
         
         for (int i = 0; i < num; i++) {
             
@@ -135,7 +162,9 @@ public class StatisticsPortletController {
             
             for (List<LoginAggregation> groupData : data) {
                 // add the login count to the second cell
-                row.addCell(new TableCell(new NumberValue(groupData.get(i).getLoginCount())));
+                final LoginAggregation loginAggregation = groupData.get(i);
+                final int loginCount = loginAggregation.getLoginCount();
+                row.addCell(new TableCell(new NumberValue(loginCount)));
             }
             table.addRow(row);
         }
