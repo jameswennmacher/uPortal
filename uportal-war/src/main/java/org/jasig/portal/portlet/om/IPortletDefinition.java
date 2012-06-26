@@ -52,8 +52,9 @@ public interface IPortletDefinition extends IBasicEntity, IPortalData {
     
     /**
      * @param portletPreferences The List of PortletPreferences, null clears the preferences but actually sets an empty list
+     * @return true if the portlet preferences changed
      */
-    public void setPortletPreferences(List<IPortletPreference> portletPreferences);
+    public boolean setPortletPreferences(List<IPortletPreference> portletPreferences);
     
     public PortletLifecycleState getLifecycleState();
     
@@ -162,8 +163,6 @@ public interface IPortletDefinition extends IBasicEntity, IPortalData {
 	public void setExpirerId(int expirerId);
 	
 	public void setExpirationDate(Date expirationDate);
-
-	public void clearParameters();
 
 	public void setParameters(Set<IPortletDefinitionParameter> parameters);
 
