@@ -78,6 +78,7 @@
          
          <bean class="org.jasig.portal.portlets.search.gsa.GsaSearchService"
              p:baseUrl="http://google.yale.edu/search" p:site="Yale_University"/>
+         <bean class="org.jasig.portal.portlets.search.confluence.ConfluenceSearchService"/>
     </util:list>
     
     <!-- 
@@ -91,6 +92,11 @@
             <list>
                 <value>googleCustom</value>
                 <value>googleAppliance</value>
+            </list>
+        </entry>
+        <entry key="unicon">
+            <list>
+                <value>wiki</value>
             </list>
         </entry>
     </util:map>
