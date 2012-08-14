@@ -96,6 +96,7 @@
 
     <util:list id="directoryQueryAttributes">
         <value>displayName</value>
+        <value>expertise</value>
     </util:list>
 
     <util:map id="directoryDisplayAttributes">
@@ -104,7 +105,15 @@
         <entry key="mail" value="EMAIL"/>
         <entry key="telephoneNumber" value="PHONE"/>
         <entry key="mobile" value="PHONE"/>
+        <entry key="extension" value="GENERIC"/>
         <entry key="postalAddress" value="MAP"/>
+        <entry key="bio" value="GENERIC"/>
+        <entry key="office" value="GENERIC"/>
+        <entry key="expertise" value="GENERIC"/>
+        <entry key="interests" value="GENERIC"/>
+        <entry key="since" value="GENERIC"/>
+        <entry key="kidsNames" value="GENERIC"/>
+        <entry key="birthDate" value="GENERIC"/>
     </util:map>
 
     <!-- Form inputs for local account editing.  These fields will be filtered

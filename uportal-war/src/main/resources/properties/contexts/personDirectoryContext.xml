@@ -137,6 +137,7 @@
 				-->
                 <ref bean="uPortalAccountUserSource" />
 				<ref bean="uPortalJdbcUserSource" />
+                <ref bean="uniconAccountUserSource"/>
                 <ref bean="uPortalLdapAttributeSource"/>
                 <ref bean="uPortalLdapAttributeSource2"/>
 			</list>
@@ -198,120 +199,91 @@
 		</property>
 	</bean>
 
-    <bean id="uPortalLdapAttributeSource" class="org.jasig.services.persondir.support.ldap.LdapPersonAttributeDao">
-            <property name="contextSource" ref="defaultLdapContext" />
-            <property name="baseDN" value="${environment.build.ldap.userbase}" />
-            <property name="queryAttributeMapping">
+    <bean id="uniconAccountUserSource" class="org.jasig.portal.persondir.unicon.UniconPersonDirectoryDao">
+        <property name="usernameAttributeProvider" ref="usernameAttributeProvider" />
+        <property name="queryAttributeMapping">
             <map>
-                    <entry key="username" value="${environment.build.ldap.uidattribute}"/>
-                    <entry key="displayName" value="${environment.build.ldap.displayName}"/>
+                    <entry key="username" value="username"/>
+                    <entry key="displayName" value="displayName"/>
+                    <entry key="expertise" value="expertise"/>
             </map>
-            </property>
-            <property name="resultAttributeMapping">
-                    <map>
-                            <entry key="extensionAttribute5">
-                                    <set>
-                                            <value>user.name.nickName</value>
-                                    </set>
-                            </entry>
-                            <entry key="department">
-                                    <set>
-                                            <value>department</value>
-                                    </set>
-                            </entry>
-                            <entry key="displayName">                   <value>displayName</value></entry>
-                            <entry key="givenName">
-                                    <set>
-                                            <value>givenName</value>
-                                            <value>user.name.given</value>
-                                            <value>first_name</value>
-                                    </set>
-                            </entry>
-                            <entry key="mail">
-                                    <set>
-                                            <value>mail</value>
-                                            <value>user.home-info.online.email</value>
-                                    </set>
-                            </entry>
-                            <entry key="sn">
-                                    <set>
-                                            <value>sn</value>
-                                            <value>user.name.family</value>
-                                            <value>last_name</value>
-                                    </set>
-                            </entry>
-                            <entry key="telephoneNumber">               <value>telephoneNumber</value></entry>
-                            <entry key="mobile">               <value>mobile</value></entry>
-                            <entry key="${environment.build.ldap.uidattribute}">
-                                    <set>
-                                            <value>uid</value>
-                                            <value>user.login.id</value>
-                                            <value>username</value>
-                                    </set>
-                            </entry>
-                            <entry key="extensionAttribute4">                       <value>instantMessenger</value></entry>
-                            <entry key="memberOf">                       <value>memberOf</value></entry>
-                    </map>
-            </property>
+        </property>
+       <property name="cache">
+            <bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+                <property name="cacheManager" ref="cacheManager"/>
+                <property name="cacheName" value="UniconPersonDirectoryCache"/>
+            </bean>
+        </property>
+        <property name="resultAttributeMapping">
+            <map>
+                <entry key="username">
+                    <set>
+                        <value>uid</value>
+                        <value>user.login.id</value>
+                        <value>username</value>
+                    </set>
+                </entry>
+                <entry key="first_name" value="givenName"/>
+                <entry key="last_name" value="sn"/>
+                <entry key="displayName" value="displayName"/>
+                <entry key="email" value="mail"/>
+                <entry key="job_title" value="title"/>
+                <entry key="cellphone" value="mobile"/>
+                <entry key="direct_dial" value="telephoneNumber"/>
+                <entry key="department" value="department"/>
+                <entry key="nickname" value="nickname"/>
+                <entry key="location" value="postalAddress"/>
+                
+                <entry key="office" value="office"/>
+                <entry key="about" value="bio"/>
+                <entry key="home_phone" value="homePhone"/>
+                <entry key="mugshot" value="photo"/>
+                <entry key="expertise" value="expertise"/>
+                <entry key="interests" value="interests"/>
+                <entry key="extension" value="extension"/>
+                <entry key="since" value="since"/>
+                <entry key="kids_names" value="kidsNames"/>
+                <entry key="birth_date" value="birthDate"/>
+            </map>
+        </property>
     </bean>
 
-    <bean id="uPortalLdapAttributeSource2" class="org.jasig.services.persondir.support.ldap.LdapPersonAttributeDao">
-            <property name="contextSource" ref="defaultLdapContext" />
-            <property name="baseDN" value="${environment.build.ldap.resourcebase}" />
-            <property name="queryAttributeMapping">
+    <bean id="uPortalLdapAttributeSource"
+        class="org.jasig.services.persondir.support.ldap.LdapPersonAttributeDao">
+        <property name="contextSource" ref="defaultLdapContext" />
+        <property name="baseDN" value="${environment.build.ldap.userbase}" />
+        <property name="queryAttributeMapping">
             <map>
-                    <entry key="username" value="${environment.build.ldap.uidattribute}"/>
-                    <entry key="displayName" value="${environment.build.ldap.displayName}"/>
+                <entry key="username" value="${environment.build.ldap.uidattribute}" />
             </map>
-            </property>
-            <property name="resultAttributeMapping">
-                    <map>
-                            <entry key="extensionAttribute5">
-                                    <set>
-                                            <value>user.name.nickName</value>
-                                    </set>
-                            </entry>
-                            <entry key="department">
-                                    <set>
-                                            <value>department</value>
-                                    </set>
-                            </entry>
-                            <entry key="displayName">                   <value>displayName</value></entry>
-                            <entry key="givenName">
-                                    <set>
-                                            <value>givenName</value>
-                                            <value>user.name.given</value>
-                                            <value>first_name</value>
-                                    </set>
-                            </entry>
-                            <entry key="mail">
-                                    <set>
-                                            <value>mail</value>
-                                            <value>user.home-info.online.email</value>
-                                    </set>
-                            </entry>
-                            <entry key="sn">
-                                    <set>
-                                            <value>sn</value>
-                                            <value>user.name.family</value>
-                                            <value>last_name</value>
-                                    </set>
-                            </entry>
-                            <entry key="telephoneNumber">               <value>telephoneNumber</value></entry>
-                            <entry key="mobile">               <value>mobile</value></entry>
-                            <entry key="${environment.build.ldap.uidattribute}">
-                                    <set>
-                                            <value>uid</value>
-                                            <value>user.login.id</value>
-                                            <value>username</value>
-                                    </set>
-                            </entry>
-                            <entry key="extensionAttribute4">                       <value>instantMessenger</value></entry>
-                            <entry key="memberOf">                       <value>memberOf</value></entry>
-                    </map>
-            </property>
+        </property>
+        <property name="resultAttributeMapping">
+            <map>
+                <entry key="memberOf">
+                    <value>memberOf</value>
+                </entry>
+            </map>
+        </property>
     </bean>
-
+     
+    <bean id="uPortalLdapAttributeSource2"
+        class="org.jasig.services.persondir.support.ldap.LdapPersonAttributeDao">
+        <property name="contextSource" ref="defaultLdapContext" />
+        <property name="baseDN" value="${environment.build.ldap.resourcebase}" />
+        <property name="queryAttributeMapping">
+            <map>
+                <entry key="username" value="${environment.build.ldap.uidattribute}" />
+            </map>
+        </property>
+        <property name="resultAttributeMapping">
+            <map>
+                <entry key="memberOf">
+                    <value>memberOf</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+     
 	<!-- 
 	<bean id="cachingMergedPersonAttributeDao" class="org.jasig.services.persondir.support.CachingPersonAttributeDaoImpl">
 		<property name="usernameAttributeProvider" ref="usernameAttributeProvider" /> 

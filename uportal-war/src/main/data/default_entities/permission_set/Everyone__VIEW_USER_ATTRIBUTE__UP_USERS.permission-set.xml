@@ -22,41 +22,71 @@
 <permission-set script="classpath://org/jasig/portal/io/import-permission_set_v3-1.crn">
   <owner>UP_USERS</owner>
   <principal-type>org.jasig.portal.groups.IEntityGroup</principal-type>
-  <principal>
-                                                <group>Everyone</group>
-                                            </principal>
-  <activity>VIEW_USER_ATTRIBUTE</activity>
-  <target permission-type="GRANT">
-                                                <literal>department</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>displayName</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>givenName</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>mail</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>organization</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>postalAddress</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>sn</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>telephoneNumber</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>mobile</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>title</literal>
-                                            </target>
-  <target permission-type="GRANT">
-                                                <literal>username</literal>
-                                            </target>
+    <principal>
+        <group>Everyone</group>
+    </principal>
+    <activity>VIEW_USER_ATTRIBUTE</activity>
+    <target permission-type="GRANT">
+        <literal>department</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>displayName</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>givenName</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>mail</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>organization</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>postalAddress</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>sn</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>telephoneNumber</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>mobile</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>title</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>username</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>office</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>bio</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>homePhone</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>photo</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>expertise</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>interests</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>extension</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>since</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>kidsNames</literal>
+    </target>
+    <target permission-type="GRANT">
+        <literal>birthDate</literal>
+    </target>
 </permission-set>
