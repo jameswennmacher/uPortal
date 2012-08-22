@@ -620,12 +620,16 @@
             <title>Translator</title>
         </portlet-info>
     </portlet>
-
+    
     <custom-portlet-mode>
         <description>Allows the portlet to render a preferences edit UI during publishing</description>
         <portlet-mode>config</portlet-mode>
     </custom-portlet-mode>    
 
+    <user-attribute>
+        <name>password</name>
+    </user-attribute>
+    
     <event-definition>
         <qname xmlns:x="https://source.jasig.org/schemas/uportal/search">x:SearchRequest</qname>
         <value-type>org.jasig.portal.search.SearchRequest</value-type>
@@ -639,4 +643,5 @@
         <name>org.jasig.portal.globalEvent</name>
         <value>{https://source.jasig.org/schemas/uportal/search}SearchRequest</value>
     </container-runtime-option>
+    
 </portlet-app>
