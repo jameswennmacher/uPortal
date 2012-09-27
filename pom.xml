@@ -109,7 +109,7 @@
         <!-- WAR Dependency Version Properties -->
         <Announcements.version>1.1.0-SNAPSHOT</Announcements.version>
         <BookmarksPortlet.version>1.0.11</BookmarksPortlet.version>
-        <CalendarPortlet.version>2.1.0-RC1</CalendarPortlet.version>
+        <CalendarPortlet.version>2.1.0-SNAPSHOT</CalendarPortlet.version>
         <CampusLifePortlets.version>1.0.0-RC1</CampusLifePortlets.version>
         <cas-server.version>3.4.11</cas-server.version>
         <cas-clearpass.version>1.0.7.GA</cas-clearpass.version>
@@ -119,7 +119,7 @@
         <FunctionalTestsPortlet.version>1.1.0</FunctionalTestsPortlet.version>
         <jasig-widget-portlets.version>1.0.3</jasig-widget-portlets.version>
         <MapPortlet.version>1.0.0-M2</MapPortlet.version>
-        <NewsReaderPortlet.version>3.0.2</NewsReaderPortlet.version>
+        <NewsReaderPortlet.version>3.0.4-SNAPSHOT</NewsReaderPortlet.version>
         <NotificationPortlet.version>1.0.0</NotificationPortlet.version>
         <SimpleContentPortlet.version>1.0.2</SimpleContentPortlet.version>
         <WeatherPortlet.version>1.0.9</WeatherPortlet.version>
