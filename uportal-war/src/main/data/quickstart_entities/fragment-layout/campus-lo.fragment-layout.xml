@@ -6,6 +6,10 @@
     </folder>
     <folder hidden="false" immutable="false" name="Footer folder" type="footer" unremovable="false"/>
     <folder hidden="false" immutable="false" name="Campus" type="regular" unremovable="false">
+      <structure-attribute>
+          <name>externalId</name>
+          <value>campus</value>
+      </structure-attribute>
       <folder hidden="false" immutable="false" name="Column 1" type="regular" unremovable="false">
         <structure-attribute>
           <name>width</name>

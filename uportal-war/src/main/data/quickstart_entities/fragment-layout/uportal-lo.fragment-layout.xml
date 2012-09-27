@@ -6,6 +6,10 @@
     </folder>
     <folder hidden="false" immutable="false" name="Footer folder" type="footer" unremovable="false"/>
     <folder hidden="false" immutable="false" name="uPortal" type="regular" unremovable="false">
+        <structure-attribute>
+            <name>externalId</name>
+            <value>uportal</value>
+        </structure-attribute>
       <folder hidden="false" immutable="false" name="Column" type="regular" unremovable="false">
         <structure-attribute>
           <name>width</name>

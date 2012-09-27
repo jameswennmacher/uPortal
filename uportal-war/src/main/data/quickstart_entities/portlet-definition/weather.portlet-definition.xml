@@ -55,12 +55,12 @@
     <portlet-preference>
         <name>locationCodes</name>
         <readOnly>false</readOnly>
-        <value>2410128</value>
+        <value>2352640</value>
     </portlet-preference>
     <portlet-preference>
         <name>locations</name>
         <readOnly>false</readOnly>
-        <value>Gilbert, AZ</value>
+        <value>Albany, OR</value>
     </portlet-preference>
     <portlet-preference>
         <name>units</name>

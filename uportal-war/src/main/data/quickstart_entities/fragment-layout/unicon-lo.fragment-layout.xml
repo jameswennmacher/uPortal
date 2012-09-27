@@ -9,6 +9,10 @@
     </folder>
     <folder hidden="false" immutable="false" name="Footer folder" type="footer" unremovable="false"/>
     <folder hidden="false" immutable="false" name="Unicon Tools" type="regular" unremovable="false">
+        <structure-attribute>
+            <name>externalId</name>
+            <value>unicon</value>
+        </structure-attribute>
       <folder hidden="false" immutable="false" name="Column" type="regular" unremovable="false">
         <structure-attribute>
           <name>width</name>
