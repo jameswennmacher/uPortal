@@ -107,14 +107,14 @@
         <filters.file>filters/${env}.properties</filters.file>
     
         <!-- WAR Dependency Version Properties -->
-        <Announcements.version>1.1.0-SNAPSHOT</Announcements.version>
+        <Announcements.version>1.1.0</Announcements.version>
         <BookmarksPortlet.version>1.0.11</BookmarksPortlet.version>
         <CalendarPortlet.version>2.1.0-SNAPSHOT</CalendarPortlet.version>
         <CampusLifePortlets.version>1.0.0-RC1</CampusLifePortlets.version>
         <cas-server.version>3.4.11</cas-server.version>
         <cas-clearpass.version>1.0.7.GA</cas-clearpass.version>
         <cas-proxy-test-portlet.version>1.0.0-RC3</cas-proxy-test-portlet.version>
-        <CoursesPortlet.version>1.0.0-M2</CoursesPortlet.version>
+        <CoursesPortlet.version>1.0.0-M3-SNAPSHOT</CoursesPortlet.version>
         <email-preview.version>2.0.1</email-preview.version>
         <FunctionalTestsPortlet.version>1.1.0</FunctionalTestsPortlet.version>
         <jasig-widget-portlets.version>1.0.3</jasig-widget-portlets.version>

@@ -44,6 +44,7 @@
           <value>40%</value>
         </structure-attribute>
         <channel fname="weather" unremovable="false" hidden="false" immutable="false"/>
+        <channel fname="course-catalog" unremovable="false" hidden="false" immutable="false"/>
       </folder>
     </folder>
     <folder hidden="false" immutable="false" name="News and Events" type="regular" unremovable="false">
