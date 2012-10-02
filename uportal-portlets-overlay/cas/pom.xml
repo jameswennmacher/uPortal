@@ -167,14 +167,14 @@
     <build>
         <finalName>cas</finalName>
         <filters>
-                   <filter>${basedir}/../../${filters.file}</filter>
-                </filters>
-                <resources>
-                   <resource>
-                      <directory>src/main/resources</directory>
-                      <filtering>true</filtering>
-                   </resource>
-                </resources>
+            <filter>../../${filters.file}</filter>
+        </filters>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
