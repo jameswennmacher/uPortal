@@ -20,71 +20,53 @@
 -->
 
 
-<portlet-definition
-    xmlns="https://source.jasig.org/schemas/uportal/io/portlet-definition" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://source.jasig.org/schemas/uportal/io/portlet-definition ../../../resources/xsd/io/portlet-definition/portlet-definition-4.0.xsd"
-   
-    version="4.0"
->
-
+<portlet-definition xmlns="https://source.jasig.org/schemas/uportal/io/portlet-definition" xmlns:ns2="https://source.jasig.org/schemas/uportal" xmlns:ns3="https://source.jasig.org/schemas/uportal/io/event-aggregation" xmlns:ns4="https://source.jasig.org/schemas/uportal/io/permission-owner" xmlns:ns5="https://source.jasig.org/schemas/uportal/io/user" xmlns:ns6="https://source.jasig.org/schemas/uportal/io/subscribed-fragment" xmlns:ns7="https://source.jasig.org/schemas/uportal/io/stylesheet-descriptor" xmlns:ns8="https://source.jasig.org/schemas/uportal/io/portlet-type" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.0" xsi:schemaLocation="https://source.jasig.org/schemas/uportal/io/portlet-definition https://source.jasig.org/schemas/uportal/io/portlet-definition/portlet-definition-4.0.xsd">
   <title>Unicon Links</title>
   <name>Unicon Links</name>
   <fname>unicon-employee-links</fname>
   <desc>Useful Unicon employee links.</desc>
-  <type>CMS</type>
-  <timeout>10000</timeout>
-  <portlet-descriptor xmlns:up="https://source.jasig.org/schemas/uportal">
-    <up:webAppName>/SimpleContentPortlet</up:webAppName>
-    <up:portletName>cms</up:portletName>
-  </portlet-descriptor>
-  
-  
-  
-  
-    <category>Information</category>
-  
-  
-    <group>Employees</group>
-  
-  
-    <parameter>
-      <name>disableDynamicTitle</name>
-      <value>true</value> 
-    </parameter>
-	<parameter>
-      <name>iconUrl</name>
-      <value>/ResourceServingWebapp/rs/tango/0.8.90/32x32/mimetypes/text-html.png</value>
-    </parameter>
-  
-  
-    <portlet-preference>
-        <name>content</name>
-        <value>
-            <![CDATA[
-			<div class="fl-widget portlet portlet-content" role="section" data-role="content">
-
-			  <!-- Portlet Body -->
-			  <div class="fl-widget-content portlet-body" role="main">
-  
-			    <!-- Portlet Section -->
-			    <div id="${n}search" class="portlet-section" role="region">
-
-			      <div class="portlet-section-body">
-		              <div class="content">
-		                <ul data-role="listview">
-		                    <li><a target="_blank" href="https://zimbra.unicon.net/">Zimbra</a></li>
-		                    <li><a target="_blank" href="https://hr.unicon.net/">Timesheet</a></li>
-		                    <li><a target="_blank" href="https://confluence.unicon.net/confluence">Confluence</a></li>
-		                    <li><a target="_blank" href="https://jira.unicon.net/jira">JIRA</a></li>
-		                    <li><a target="_blank" href="http://www.unicon.net/">Unicon Home Site</a></li>
-		                </ul>
-		              </div>
-			      </div>
-			    </div>
-			</div>
-            ]]>
-        </value>
-    </portlet-preference>
-  
-</portlet-definition>
+      <type>Portlet</type>
+      <timeout>5000</timeout>
+      <portlet-descriptor>
+          <ns2:webAppName>/WebProxyPortlet</ns2:webAppName>
+          <ns2:portletName>UniconLinksPortlet</ns2:portletName>
+      </portlet-descriptor>
+      <category>Demonstration</category>
+      <group>Everyone</group>
+      <parameter>
+          <name>alternate</name>
+          <value>false</value>
+      </parameter>
+      <parameter>
+          <name>blockImpersonation</name>
+          <value>false</value>
+      </parameter>
+      <parameter>
+          <name>disableDynamicTitle</name>
+          <value>true</value>
+      </parameter>
+      <parameter>
+          <name>editable</name>
+          <value>false</value>
+      </parameter>
+      <parameter>
+          <name>hasAbout</name>
+          <value>false</value>
+      </parameter>
+      <parameter>
+          <name>hasHelp</name>
+          <value>false</value>
+      </parameter>
+      <parameter>
+          <name>hideFromMobile</name>
+          <value>false</value>
+      </parameter>
+      <parameter>
+          <name>highlight</name>
+          <value>false</value>
+      </parameter>
+      <parameter>
+          <name>showChrome</name>
+          <value>true</value>
+      </parameter>
+  </portlet-definition>

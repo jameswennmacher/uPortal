@@ -123,7 +123,7 @@
         <NotificationPortlet.version>1.0.0</NotificationPortlet.version>
         <SimpleContentPortlet.version>1.0.2</SimpleContentPortlet.version>
         <WeatherPortlet.version>1.0.9</WeatherPortlet.version>
-        <WebProxyPortlet.version>1.1.7</WebProxyPortlet.version>
+        <WebProxyPortlet.version>2.0-SNAPSHOT</WebProxyPortlet.version>
 
         <!-- Project Dependency Version Properties -->
         <aopalliance.version>1.0</aopalliance.version>
