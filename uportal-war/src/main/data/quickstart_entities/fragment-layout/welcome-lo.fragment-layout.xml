@@ -61,7 +61,6 @@
           <value>40%</value>
         </structure-attribute>
         <channel fname="calendar" unremovable="false" hidden="false" immutable="false"/>
-        <channel fname="athletics" unremovable="false" hidden="false" immutable="false"/>
       </folder>
     </folder>
   </folder>

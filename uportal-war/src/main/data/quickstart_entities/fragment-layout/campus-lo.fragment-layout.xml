@@ -15,6 +15,7 @@
           <name>width</name>
           <value>50%</value>
         </structure-attribute>
+        <channel fname="athletics" unremovable="false" hidden="false" immutable="false"/>
         <channel fname="computer-labs" unremovable="false" hidden="false" immutable="false"/>
         <channel fname="laundry" unremovable="false" hidden="false" immutable="false"/>
       </folder>
