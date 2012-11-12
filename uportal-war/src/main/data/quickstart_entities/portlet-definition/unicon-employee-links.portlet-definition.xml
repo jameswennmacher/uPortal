@@ -69,4 +69,9 @@
           <name>showChrome</name>
           <value>true</value>
       </parameter>
+      <parameter>
+          <name>mobileIconUrl</name>
+          <value>/uPortal/media/skins/icons/mobile/links.png</value>
+      </parameter>
+
   </portlet-definition>
