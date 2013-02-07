@@ -29,7 +29,7 @@
      +-->
     <bean id="ldapContext" class="org.springframework.ldap.core.support.LdapContextSource">
         <property name="url" value="${environment.build.ldap.url}"/>
-        <property name="userDn" value="${environment.build.ldap.username}"/>
+        <property name="userDn" value="${environment.build.ldap.userName}"/>
         <property name="password" value="${environment.build.ldap.password}"/>
     </bean>
 

@@ -121,7 +121,7 @@
                     +-->
                 <bean class="org.jasig.cas.adaptors.ldap.BindLdapAuthenticationHandler">
                     <property name="filter" value="${environment.build.ldap.uidattribute}=%u" />
-                    <property name="searchBase" value="${environment.build.ldap.userbase}" />
+                    <property name="searchBase" value="${environment.build.ldap.baseDn}" />
                     <property name="contextSource" ref="ldapContextSource" />
                     <property name="ignorePartialResultException" value="yes" />
                 </bean>
@@ -160,7 +160,7 @@
     <bean id="ldapContextSource" class="org.springframework.ldap.core.support.LdapContextSource">
         <property name="pooled" value="true"/>
         <property name="url" value="${environment.build.ldap.url}"/>
-        <property name="userDn" value="${environment.build.ldap.username}"/>
+        <property name="userDn" value="${environment.build.ldap.userName}"/>
         <property name="password" value="${environment.build.ldap.password}"/>
         <property name="baseEnvironmentProperties">
             <map>
