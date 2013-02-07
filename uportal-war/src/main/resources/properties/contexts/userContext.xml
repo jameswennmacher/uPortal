@@ -107,6 +107,7 @@
     <!-- The following attribute names are used in searching for users through 
         person-directory, such as from within the Directory framework portlet. -->
     <util:list id="directoryQueryAttributes">
+        <value>username</value>
         <value>displayName</value>
         <value>expertise</value>
     </util:list>
