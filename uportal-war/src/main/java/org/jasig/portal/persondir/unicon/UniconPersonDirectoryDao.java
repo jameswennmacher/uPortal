@@ -49,7 +49,7 @@ public class UniconPersonDirectoryDao extends
         restTemplate.setMessageConverters(Collections.<HttpMessageConverter<?>>singletonList(converter));
     }
 
-    @Scheduled(fixedRate=90000)
+    @Scheduled(fixedRate=60000)
     protected void fetchUserList() {
 
         log.debug("Fetching unicon person attribute feed");
