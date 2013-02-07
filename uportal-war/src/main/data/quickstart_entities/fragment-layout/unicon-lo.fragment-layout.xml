@@ -4,10 +4,6 @@
     <folder hidden="true" immutable="true" name="Header folder" type="header" unremovable="true">
       <channel fname="fragment-admin-exit" unremovable="false" hidden="false" immutable="false"/>
     </folder>
-    <folder hidden="false" immutable="true" name="Header folder" type="header" unremovable="true">
-      <channel fname="fragment-admin" unremovable="false" hidden="false" immutable="false"/>
-    </folder>
-    <folder hidden="false" immutable="false" name="Footer folder" type="footer" unremovable="false"/>
     <folder hidden="false" immutable="false" name="Unicon Tools" type="regular" unremovable="false">
         <structure-attribute>
             <name>externalId</name>
