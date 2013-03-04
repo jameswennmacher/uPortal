@@ -14,7 +14,7 @@
           <name>width</name>
           <value>50%</value>
         </structure-attribute>
-        <channel fname="directory" unremovable="false" hidden="false" immutable="false"/>
+        <channel fname="contacts" unremovable="false" hidden="false" immutable="false"/>
       </folder>
       <folder hidden="false" immutable="false" name="Column" type="regular" unremovable="false">
         <structure-attribute>

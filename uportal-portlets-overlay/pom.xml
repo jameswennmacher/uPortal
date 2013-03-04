@@ -22,6 +22,7 @@
         <module>CampusLifePortlets</module>
         <module>cas</module>
         <module>cas-proxy-test-portlet</module>
+        <module>ContactsPortlet</module>
         <module>CoursesPortlet</module>
         <module>email-preview</module>
         <module>FunctionalTestsPortlet</module>
