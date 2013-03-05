@@ -33,6 +33,10 @@
     <category>Information</category>
     <group>Everyone</group>
     <parameter>
+        <name>editable</name>
+        <value>true</value>
+    </parameter>
+    <parameter>
         <name>mobileIconUrl</name>
         <value>/uPortal/media/skins/icons/mobile/directory.png</value>
     </parameter>
