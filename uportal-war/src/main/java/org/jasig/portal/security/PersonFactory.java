@@ -68,6 +68,23 @@ public class PersonFactory {
         }
     };
 
+    private static final SingletonDoubleCheckedCreator<Integer> SYSTEM_USER_ID_LOADER = new SingletonDoubleCheckedCreator<Integer>() {
+        /* (non-Javadoc)
+         * @see org.jasig.portal.utils.threading.SingletonDoubleCheckedCreator#createSingleton(java.lang.Object[])
+         */
+        @Override
+        protected Integer createSingleton(Object... args) {
+            final IPerson person = (IPerson)args[0];
+            final IUserIdentityStore userIdentityStore = UserIdentityStoreLocator.getUserIdentityStore();
+            try {
+                return userIdentityStore.getPortalUID(person);
+            }
+            catch (Exception e) {
+                throw new RuntimeException("Error while finding user id for person: "  + person, e);
+            }
+        }
+    };
+
     /**
      * Creates an empty <code>IPerson</code> implementation. 
      * @return an empty <code>IPerson</code> implementation
@@ -77,13 +94,15 @@ public class PersonFactory {
     }
 
     /**
-     * Creates a <i>system</i> user.
+     * Creates a <i>system</i> user (uses the admin account).
      * @return a <i>system</i> user
      */
     public static IPerson createSystemPerson() {
         IPerson person = createPerson();
-        person.setAttribute(IPerson.USERNAME, "SYSTEM_USER");
-        person.setID(0);
+        person.setAttribute(IPerson.USERNAME, "admin");
+        final int systemUserId = SYSTEM_USER_ID_LOADER.get(person);
+        person.setID(systemUserId);
+        person.setSecurityContext(InitialSecurityContextFactory.getInitialContext("root"));
         return person;
     }
 

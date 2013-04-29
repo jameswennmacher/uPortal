@@ -36,6 +36,13 @@ public interface IPersonManager {
    * @return IPerson associated with the incoming request
    */
   public IPerson getPerson(HttpServletRequest request) throws PortalSecurityException;
+
+    /**
+     * Assigns the System account as the person for the incoming request if no person assigned.
+     * WARNING!!! This account is not restricted.  Invoke this method with EXTREME care!
+     * @param request the servlet request object
+     */
+  public void useSystemAccount (HttpServletRequest request) throws PortalSecurityException;
 }
 
 
