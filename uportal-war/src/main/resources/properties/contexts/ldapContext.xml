@@ -49,16 +49,12 @@
         <property name="uidAttribute" value="${environment.build.ldap.uid}"/>
         <property name="baseDN" value="${environment.build.ldap.baseDn}"/>
     </bean>
-    <bean id="defaultLdapContext" class="org.springframework.ldap.core.support.LdapContextSource">
-        <property name="url" value="${environment.build.ldap.protocol}://${environment.build.ldap.ldapURL}:${environment.build.ldap.port}"/>
-        <property name="userDn" value="${environment.build.ldap.managerdn}"/>
-        <property name="password" value="${environment.build.ldap.managerpw}"/>
-    </bean>
+    
     <!--
      | Example LDAP Server Configuration for LDAP person attribute lookups
      +-->
     <!-- Declare the standard spring-ldap ContextSource objects to define LDAP server connections -->
-    <!--bean id="defaultLdapContext" class="org.springframework.ldap.pool.factory.PoolingContextSource">
+    <bean id="defaultLdapContext" class="org.springframework.ldap.pool.factory.PoolingContextSource">
         <property name="contextSource" ref="defaultLdapContext_target"/>
         <property name="dirContextValidator">
             <bean class="org.springframework.ldap.pool.validation.DefaultDirContextValidator">
@@ -89,6 +85,6 @@
         <property name="userDn" value="${environment.build.ldap.managerdn}"/>
         <property name="password" value="${environment.build.ldap.managerpw}"/>
         <property name="pooled" value="false"/>
-    </bean-->
-
+    </bean>
+    -->
 </beans>
