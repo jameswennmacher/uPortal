@@ -31,7 +31,7 @@
         <ns2:portletName>Directory</ns2:portletName>
     </portlet-descriptor>
     <category>Information</category>
-    <group>ldapDevelopers</group>
+    <group>Authenticated Users</group>
     <parameter>
         <name>disableDynamicTitle</name>
         <value>true</value>
