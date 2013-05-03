@@ -48,4 +48,8 @@
          <name>usePortalJsLibs</name>
          <value>true</value>
      </portlet-preference>
+    <portlet-preference>
+        <name>timezone</name>
+        <value>Asia/Tokyo</value>
+    </portlet-preference>
 </portlet-definition>

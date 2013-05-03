@@ -21,29 +21,29 @@
 -->
 
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans" 
+       xmlns="http://www.springframework.org/schema/beans"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
-    
+
     <!-- ********** User Information Support Beans ********** -->
     <!--
      | Provides user name for the current portal user if the thread is handling a request
      +-->
     <bean id="currentUserProvider" class="org.jasig.portal.persondir.support.PersonManagerCurrentUserProvider" />
-    
+
     <!--
      | Provides the default username attribute to use to the rest of the DAOs
      +-->
     <bean id="usernameAttributeProvider" class="org.jasig.services.persondir.support.SimpleUsernameAttributeProvider">
         <property name="usernameAttribute" value="username" />
     </bean>
-    
-    
-    
+
+
+
     <!-- ********** Overwriting attribute beans for Attribute Swapper ********** -->
     <!-- 
      | Overrides DAO acts as the root, it handles incorporating attributes from the attribute swapper utility, wraps
@@ -54,7 +54,7 @@
         <property name="delegatePersonAttributeDao" ref="requestAttributeMergingDao" />
         <property name="attributeOverridesMap" ref="sessionAttributesOverridesMap" />
     </bean>
-    
+
     <!--
      | Store attribute overrides in a session scoped map to ensure overrides don't show up for
      | other users and swapped attributes will be cleaned up on user logout.
@@ -151,6 +151,7 @@
                         <ref bean="uPortalAccountUserSource" />
                         <ref bean="uPortalJdbcUserSource" />
                         <!-- ADDITIONAL ATTRIBUTE SOURCES GET ADDED HERE -->
+                        <ref bean="uPortalLdapAttributeSource"/>
                     </list>
                 </property>
             </bean>
@@ -182,7 +183,7 @@
             </map>
         </property>
     </bean>
-    
+
     <!--
      | Looks in the base UP_USER table, doesn't find attributes but will ensure a result if it the user exists in the
      | portal database and is searched for by username, results are cached by the outer caching DAO
@@ -202,7 +203,7 @@
             <bean class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">
                 <constructor-arg index="0" ref="PersonDB" />
                 <constructor-arg>
-                    <value> 
+                    <value>
                         SELECT USER_NAME
                         FROM UP_USER
                         WHERE {0}
@@ -228,9 +229,65 @@
             </bean>
         </property>
     </bean>
-    
+
     <!-- Where non-local attribute DAOs go -->
-    
+    <bean id="uPortalLdapAttributeSource"
+          class="org.jasig.services.persondir.support.ldap.LdapPersonAttributeDao">
+        <property name="contextSource" ref="defaultLdapContext" />
+        <property name="baseDN" value="${environment.build.ldap.baseDn}" />
+        <property name="queryAttributeMapping">
+            <map>
+                <entry key="username"   value="${environment.build.ldap.uid}" />
+                <entry key="cn"  value="cn" />
+                <entry key="sn"         value="sn" />
+                <entry key="mail"       value="mail" />
+            </map>
+        </property>
+        <property name="queryType" value="OR"/>
+        <property name="resultAttributeMapping">
+            <map>
+                <entry key="${environment.build.ldap.uid}">
+                    <set>
+                        <value>uid</value>
+                        <value>username</value>
+                        <value>user.login.id</value>
+                    </set>
+                </entry>
+                <entry key="cn">
+                    <set>
+                        <value>cn</value>
+                    </set>
+                </entry>
+                <entry key="givenName">
+                    <set>
+                        <value>givenName</value>
+                        <value>user.name.given</value>
+                        <value>first_name</value>
+                    </set>
+                </entry>
+                <entry key="sn">
+                    <set>
+                        <value>sn</value>
+                        <value>user.name.family</value>
+                        <value>last_name</value>
+                    </set>
+                </entry>
+                <entry key="mail">
+                    <set>
+                        <value>mail</value>
+                        <value>user.home-info.online.email</value>
+                    </set>
+                </entry>
+                <!--entry key="memberOf">
+                    <value>memberOf</value>
+                </entry-->
+                <entry key="${environment.build.ldap.displayName}">
+                    <value>displayName</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
     <bean id="userAttributeCacheKeyGenerator" class="org.jasig.portal.utils.cache.PersonDirectoryCacheKeyGenerator">
         <property name="ignoreEmptyAttributes" value="true" />
     </bean>

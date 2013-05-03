@@ -43,20 +43,17 @@
      +-->
 
     <!-- Delcare the legacy support bean to make LdapServices still work -->
-    <!--
     <alias name="defaultLdapServer" alias="Main"/>
     <bean id="defaultLdapServer" class="org.jasig.portal.ldap.ContextSourceLdapServerImpl">
         <property name="contextSource" ref="defaultLdapContext"/>
         <property name="uidAttribute" value="uid"/>
         <property name="baseDN" value="${ldap.old_base}"/>
     </bean>
-    -->
-    
+
     <!--
      | Example LDAP Server Configuration for LDAP person attribute lookups
      +-->
     <!-- Declare the standard spring-ldap ContextSource objects to define LDAP server connections -->
-    <!-- 
     <bean id="defaultLdapContext" class="org.springframework.ldap.pool.factory.PoolingContextSource">
         <property name="contextSource" ref="defaultLdapContext_target"/>
         <property name="dirContextValidator">
@@ -89,5 +86,4 @@
         <property name="password" value="${ldap.password}"/>
         <property name="pooled" value="false"/>
     </bean>
-    -->
 </beans>

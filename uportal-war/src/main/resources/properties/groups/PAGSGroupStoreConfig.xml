@@ -97,9 +97,91 @@
         </test>
       </test-group>
     </selection-test>
+      <members>
+          <member-key>ldapStudents</member-key>
+          <member-key>ldapFaculty</member-key>
+          <member-key>ldapStaff</member-key>
+          <member-key>ldapDevelopers</member-key>
+          <member-key>ldapOfficers</member-key>
+      </members>
   </group>
-  
-  <!--==================== Other Examples ====================-->
+
+    <group>
+        <group-key>ldapStudents</group-key>
+        <group-name>Students per LDAP</group-name>
+        <group-description>Students</group-description>
+        <selection-test>
+            <test-group>
+                <test>
+                    <attribute-name>employeeType</attribute-name>
+                    <tester-class>org.jasig.portal.groups.pags.testers.StringEqualsIgnoreCaseTester</tester-class>
+                    <test-value>student</test-value>
+                </test>
+            </test-group>
+        </selection-test>
+    </group>
+
+    <group>
+        <group-key>ldapFaculty</group-key>
+        <group-name>Faculty per LDAP</group-name>
+        <group-description>Faculty</group-description>
+        <selection-test>
+            <test-group>
+                <test>
+                    <attribute-name>employeeType</attribute-name>
+                    <tester-class>org.jasig.portal.groups.pags.testers.StringEqualsIgnoreCaseTester</tester-class>
+                    <test-value>faculty</test-value>
+                </test>
+            </test-group>
+        </selection-test>
+    </group>
+
+    <group>
+        <group-key>ldapStaff</group-key>
+        <group-name>Staff per LDAP</group-name>
+        <group-description>Staff</group-description>
+        <selection-test>
+            <test-group>
+                <test>
+                    <attribute-name>employeeType</attribute-name>
+                    <tester-class>org.jasig.portal.groups.pags.testers.StringEqualsIgnoreCaseTester</tester-class>
+                    <test-value>staff</test-value>
+                </test>
+            </test-group>
+        </selection-test>
+    </group>
+
+    <group>
+        <group-key>ldapDevelopers</group-key>
+        <group-name>Developers/Media Center per LDAP</group-name>
+        <group-description>Media Center Developers</group-description>
+        <selection-test>
+            <test-group>
+                <test>
+                    <attribute-name>employeeType</attribute-name>
+                    <tester-class>org.jasig.portal.groups.pags.testers.StringEqualsIgnoreCaseTester</tester-class>
+                    <test-value>developer</test-value>
+                </test>
+            </test-group>
+        </selection-test>
+    </group>
+
+    <group>
+        <group-key>ldapOfficers</group-key>
+        <group-name>Officers per LDAP</group-name>
+        <group-description>Officers</group-description>
+        <selection-test>
+            <test-group>
+                <test>
+                    <attribute-name>employeeType</attribute-name>
+                    <tester-class>org.jasig.portal.groups.pags.testers.StringEqualsIgnoreCaseTester</tester-class>
+                    <test-value>officer</test-value>
+                </test>
+            </test-group>
+        </selection-test>
+    </group>
+
+    <!--==================== Other Examples ====================-->
 
 
 <!--

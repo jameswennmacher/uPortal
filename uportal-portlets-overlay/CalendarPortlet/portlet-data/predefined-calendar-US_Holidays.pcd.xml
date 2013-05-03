@@ -25,7 +25,4 @@
   <parameters>
     <parameter name="url">http://ical.mac.com/ical/US32Holidays.ics</parameter>
   </parameters>
-  <predefinedRoles>
-    <role>Everyone</role>
-  </predefinedRoles>
 </predefined-calendar>
