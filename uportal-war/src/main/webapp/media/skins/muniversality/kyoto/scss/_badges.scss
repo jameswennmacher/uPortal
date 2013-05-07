@@ -1,0 +1,37 @@
+/* BADGES */
+
+.up {
+	.badge {
+		@include badge();
+		border-color: $white;
+		background: $graydark50;
+		color: $white;
+		@include text-shadow(light);
+		@include gradient($graydark50, $graydark50);
+		@include box-shadow($xpos:0px, $ypos:1px, $blur:6px, $color: $graydark50);
+	}
+	.badge.new-item {
+		border-color: $white;
+		background	: $graydark50;
+		color		: $white;
+		@include text-shadow(light);
+		@include gradient($graydark50, $graydark50);
+		@include box-shadow($xpos:0px, $ypos:1px, $blur:6px, $color: $graydark50);
+	}
+	.badge.unread-item,
+	.portlet-content .ui-listview .ui-li-count {
+		border-color: $white;
+		background	: $graydark50;
+		color		: $white;
+		@include text-shadow(light);
+		@include gradient($graydark50, $graydark50);
+		@include box-shadow($xpos:0px, $ypos:1px, $blur:6px, $color: $graydark50);
+	}
+	.badge.read-item {}
+	.portal-nav .badge.new-item {
+		@include box-shadow($xpos:0px, $ypos:1px, $blur:6px, $color: $graydark50);
+	}
+	.portlet-content .ui-listview .ui-li-count {
+		padding: 0.2em 10px;
+	}
+}

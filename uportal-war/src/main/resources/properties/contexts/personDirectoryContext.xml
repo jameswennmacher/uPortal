@@ -151,6 +151,7 @@
                         <ref bean="uPortalAccountUserSource" />
                         <ref bean="uPortalJdbcUserSource" />
                         <!-- ADDITIONAL ATTRIBUTE SOURCES GET ADDED HERE -->
+			<ref bean="uPortalLdapAttributeSource"/>
                     </list>
                 </property>
             </bean>
@@ -230,6 +231,62 @@
     </bean>
     
     <!-- Where non-local attribute DAOs go -->
+    <bean id="uPortalLdapAttributeSource"
+        class="org.jasig.services.persondir.support.ldap.LdapPersonAttributeDao">
+        <property name="contextSource" ref="defaultLdapContext" />
+        <property name="baseDN" value="${environment.build.ldap.baseDn}" />
+        <property name="queryAttributeMapping">
+            <map>
+                <entry key="username"   value="${environment.build.ldap.uid}" />
+                <entry key="cn"  value="cn" />
+                <entry key="sn"         value="sn" />
+                <entry key="mail"       value="mail" /> 
+            </map>
+        </property>
+        <property name="queryType" value="OR"/>
+        <property name="resultAttributeMapping">
+            <map>
+                <entry key="${environment.build.ldap.uid}">
+                    <set>
+                        <value>uid</value>
+                        <value>username</value>
+                        <value>user.login.id</value>
+                    </set>
+                </entry>
+                <entry key="cn">
+                    <set>
+                        <value>cn</value>
+                    </set>
+                </entry>
+                <entry key="givenName">
+                    <set>
+                        <value>givenName</value>
+                        <value>user.name.given</value>
+                        <value>first_name</value>
+                    </set>
+                </entry>
+                <entry key="sn">
+                    <set>
+                        <value>sn</value>
+                        <value>user.name.family</value>
+                        <value>last_name</value>
+                    </set>
+                </entry>
+                <entry key="mail">
+                    <set>
+                        <value>mail</value>
+                        <value>user.home-info.online.email</value>
+                    </set>
+                </entry>
+                <!--entry key="memberOf">
+                    <value>memberOf</value>
+                </entry-->
+                <entry key="${environment.build.ldap.displayName}">
+                        <value>displayName</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
     
     <bean id="userAttributeCacheKeyGenerator" class="org.jasig.portal.utils.cache.PersonDirectoryCacheKeyGenerator">
         <property name="ignoreEmptyAttributes" value="true" />

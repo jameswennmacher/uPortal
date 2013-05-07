@@ -1,0 +1,5 @@
+/* HELPERS */
+
+@mixin text-shadows($hShadow: 0, $vShadow: -1px, $blur: 1px, $color: $black) {
+	text-shadow: $hShadow $vShadow $blur $color;
+}

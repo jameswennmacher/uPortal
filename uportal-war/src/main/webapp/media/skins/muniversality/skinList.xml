@@ -29,6 +29,12 @@
       iPhone theme and skin.
     </skin-description>
   </skin>
-  
-</skins>
 
+  <skin>
+    <skin-key>kyoto</skin-key>
+    <skin-name>kyoto</skin-name>
+    <skin-description>
+      Kyoto mobile theme and skin.
+    </skin-description>
+  </skin>
+</skins>
