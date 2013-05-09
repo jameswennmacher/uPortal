@@ -1,0 +1,37 @@
+/* COLORS */
+
+/* Color Palette
+--------------------------------------*/
+/* RGBA values include transparency and are easier than hexidecimal to use in 
+mathematical calculations. */
+$cream			: rgba(239,239,239,1);
+
+/* Background color */
+/* Off-white / Cream */
+$bgc			: $cream;
+
+/* Grayscale */
+$gray			: rgba(169, 169, 169, 1);
+$graydark10		: darken($gray, 10%);
+$graydark20		: darken($gray, 20%);
+$graydark30		: darken($gray, 30%);
+$graydark40		: darken($gray, 40%);
+$graydark50		: darken($gray, 50%);
+$graydark60		: darken($gray, 60%);
+$graylight10	: lighten($gray, 10%);
+$graylight20	: lighten($gray, 20%);
+$graylight30	: lighten($gray, 30%);
+$graylight40	: lighten($gray, 40%);
+$graylight50	: lighten($gray, 50%);
+
+/* Primary text color, c6 */
+/* Very Dark Gray */
+$c6				: rgba(19, 19, 19, 1);
+
+/* Secondary text color, c7 */
+/* Dark Gray */
+$c7				: rgba(85, 85, 85, 1);
+
+/* Paths
+--------------------------------------*/
+$logoPath		: "../kyoto/images/um_logo.png";

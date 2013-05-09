@@ -1,0 +1,127 @@
+/* THEME */
+
+.up {
+	// Dashboard list view.
+	&.dashboard-list {
+		.dashboard {
+			.portal-nav {
+				.ui-listview {
+					li {
+						&.ui-li-divider {
+							padding-top: 10px;
+							padding-bottom: 10px;
+							@include gradient($graydark60, $graydark60);
+							border-bottom: 1px solid $graydark10;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Dashboard grid view.
+	&.dashboard-grid {
+		.dashboard {
+			.portal-nav {
+				.portlet {
+					overflow: visible;
+				}
+			}
+		}
+	}
+
+	// Dashboard.
+	.dashboard {
+		color: $c7;
+		background: $bgc;
+		@include text-shadows(0, 0, 0);
+
+		.ui-link-inherit {
+			color: $c7;
+		}
+		.ui-link { 
+			color: $c7;
+		}
+	}
+
+	// Portlet Wrapper Titlebar.
+	.portlet-wrapper-titlebar {
+		border-color: $white;
+		background: $white;
+		color: $c6;
+		border-bottom: 3px solid $c6;
+		@include text-shadows(0, 0, 0);
+		@include gradient($white, $white);
+		@include button();
+
+		.ui-title {
+			width: 140px;
+			margin: 0 auto;
+			padding: 13px 0 13px 0;
+			background: url($logoPath) 0 50% no-repeat;
+			span {
+				display: block;
+				margin: 0 0 0 45px;
+			}
+		}
+
+		.ui-btn {
+			margin-top: 3px;
+		}
+	}
+
+	// Portlet titlebar.
+	.portlet-titlebar {
+		border-color: $graydark60;
+		background: $graydark60;
+		color: $white;
+		@include gradient($graydark60, $graydark60);
+		@include button();
+	}
+
+	// Portlet content.
+	.portlet-content {
+		.titlebar {
+			.title {
+				.ui-link {
+					color: $c6;
+					text-decoration: none;
+				}
+			}
+		}
+
+		// Visual divider between items.
+		.ui-li-divider {
+			border-color: $graydark60;
+			border-top: 1px solid $graydark10;
+			background: $graydark60;
+			color: $white;
+			@include gradient($graydark60, $graydark60);
+			@include box-shadow(0, 0, 5px, $graylight10);
+		}
+
+		// Portlet-based buttons.
+		.utilities {
+			@include button();
+		}
+
+		// Active state.
+		.ui-btn-active {
+			border-color: none;
+			background: $cream;
+		}
+
+		// Checkbox background color.
+		.ui-checkbox-on .ui-icon,
+		.ui-radio-on .ui-icon {
+			background-color: $graydark30;
+		}
+	}
+
+	// Focused.
+	.focused {
+		.ui-title {
+			background: none;
+		}
+	}
+}
