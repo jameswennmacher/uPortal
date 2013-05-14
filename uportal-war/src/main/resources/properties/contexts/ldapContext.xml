@@ -49,7 +49,15 @@
         <property name="uidAttribute" value="${environment.build.ldap.uid}"/>
         <property name="baseDN" value="${environment.build.ldap.baseDn}"/>
     </bean>
-    
+
+    <!-- Entry from Kyoto server. Can probably use bean below this one instead.
+    <bean id="defaultLdapContext" class="org.springframework.ldap.core.support.LdapContextSource">
+        <property name="url" value="${environment.build.ldap.protocol}://${environment.build.ldap.ldapURL}:${environment.build.ldap.port}"/>
+        <property name="userDn" value="${environment.build.ldap.managerdn}"/>
+        <property name="password" value="${environment.build.ldap.managerpw}"/>
+    </bean>
+    -->
+
     <!--
      | Example LDAP Server Configuration for LDAP person attribute lookups
      +-->
@@ -80,11 +88,10 @@
     </bean>
     
     <bean id="defaultLdapContext_target" class="org.springframework.ldap.core.support.LdapContextSource">
-        <property name="url" value="${environment.build.ldap.protocol}://${environment.build.ldap.ldapURL}:${environment.build.ldap.port}"/>
-        <property name="base" value=""/>
+        <property name="url" value="${environment.build.ldap.url}"/>
+        <property name="base" value="${environment.build.ldap.baseDn}"/>
         <property name="userDn" value="${environment.build.ldap.managerdn}"/>
         <property name="password" value="${environment.build.ldap.managerpw}"/>
         <property name="pooled" value="false"/>
     </bean>
-    -->
 </beans>
