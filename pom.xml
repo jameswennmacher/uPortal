@@ -92,7 +92,15 @@
         <jdbc.groupId>org.hsqldb</jdbc.groupId>
         <jdbc.artifactId>hsqldb</jdbc.artifactId>
         <jdbc.version>${hsqldb.version}</jdbc.version>
-    
+
+        <!--jdbc.groupId>com.oracle</jdbc.groupId>
+            <jdbc.artifactId>ojdbc14</jdbc.artifactId>
+            <jdbc.version>10.2.0.3.0</jdbc.version-->
+
+        <jdbc.groupId>com.oracle</jdbc.groupId>
+        <jdbc.artifactId>ojdbc6</jdbc.artifactId>
+        <jdbc.version>11.2.0.1.0</jdbc.version>
+
         <!--
          | Environment name and filters file for environment-specific build
          | settings.  By default <environment.name> is blank, and the filters 

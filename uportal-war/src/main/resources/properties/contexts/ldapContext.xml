@@ -21,7 +21,7 @@
 -->
 
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans" 
+       xmlns="http://www.springframework.org/schema/beans"
        xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -35,29 +35,30 @@
      | separately or together, depending on which LDAP services you're using. Note that
      | both contain LdapContextSource beans but they have slightly different configurations
      +-->
-        
-    <!-- 
+
+    <!--
      | Legacy LDAP configuration, needed for use by deprecated LDAPServcies code.
      | Required for:
      |  - SimpleLdapSecurityContext
      +-->
 
     <!-- Delcare the legacy support bean to make LdapServices still work -->
-    <!--
     <alias name="defaultLdapServer" alias="Main"/>
     <bean id="defaultLdapServer" class="org.jasig.portal.ldap.ContextSourceLdapServerImpl">
         <property name="contextSource" ref="defaultLdapContext"/>
-        <property name="uidAttribute" value="uid"/>
-        <property name="baseDN" value="${ldap.old_base}"/>
+        <property name="uidAttribute" value="${environment.build.ldap.uid}"/>
+        <property name="baseDN" value="${environment.build.ldap.baseDn}"/>
     </bean>
-    -->
-    
+    <bean id="defaultLdapContext" class="org.springframework.ldap.core.support.LdapContextSource">
+        <property name="url" value="${environment.build.ldap.protocol}://${environment.build.ldap.ldapURL}:${environment.build.ldap.port}"/>
+        <property name="userDn" value="${environment.build.ldap.managerdn}"/>
+        <property name="password" value="${environment.build.ldap.managerpw}"/>
+    </bean>
     <!--
      | Example LDAP Server Configuration for LDAP person attribute lookups
      +-->
     <!-- Declare the standard spring-ldap ContextSource objects to define LDAP server connections -->
-    <!--
-    <bean id="defaultLdapContext" class="org.springframework.ldap.pool.factory.PoolingContextSource">
+    <!--bean id="defaultLdapContext" class="org.springframework.ldap.pool.factory.PoolingContextSource">
         <property name="contextSource" ref="defaultLdapContext_target"/>
         <property name="dirContextValidator">
             <bean class="org.springframework.ldap.pool.validation.DefaultDirContextValidator">
@@ -83,11 +84,11 @@
     </bean>
     
     <bean id="defaultLdapContext_target" class="org.springframework.ldap.core.support.LdapContextSource">
-        <property name="url" value="${ldap.url}"/>
-        <property name="base" value="${ldap.baseDn}"/>
-        <property name="userDn" value="${ldap.userName}"/>
-        <property name="password" value="${ldap.password}"/>
+        <property name="url" value="${environment.build.ldap.protocol}://${environment.build.ldap.ldapURL}:${environment.build.ldap.port}"/>
+        <property name="base" value=""/>
+        <property name="userDn" value="${environment.build.ldap.managerdn}"/>
+        <property name="password" value="${environment.build.ldap.managerpw}"/>
         <property name="pooled" value="false"/>
-    </bean>
-    -->
+    </bean-->
+
 </beans>
