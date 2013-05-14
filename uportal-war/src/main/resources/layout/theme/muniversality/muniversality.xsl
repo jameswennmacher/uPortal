@@ -131,9 +131,10 @@
 | YELLOW
 | Skin Settings can be used to change the location of skin files.
 --> 
-<xsl:param name="skin">iphone</xsl:param>
+<xsl:param name="skin">kyoto</xsl:param>
 <xsl:param name="CONTEXT_PATH">/NOT_SET</xsl:param>
 <xsl:param name="view">grid</xsl:param>
+<xsl:param name="DISPLAY_NAME">PandA</xsl:param>
 <xsl:variable name="SKIN" select="$skin"/>
 <xsl:variable name="VIEW" select="$view"/>
 <xsl:variable name="MEDIA_PATH">media/skins/muniversality</xsl:variable>

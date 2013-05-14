@@ -1,0 +1,81 @@
+/* BUTTONS */
+
+/* Use variables to store multiple jQM selectors. */
+$btn-up-selector	: ".ui-btn-up-a, .ui-btn-up-b, .ui-btn-up-c, .ui-btn-up-d, .ui-btn-up-e";
+$btn-hover-selector	: ".ui-btn-hover-a, .ui-btn-hover-b, .ui-btn-hover-c, .ui-btn-hover-d, .ui-btn-hover-e";
+$btn-down-selector	: ".ui-btn-down-a, .ui-btn-down-b, .ui-btn-down-c, .ui-btn-down-d, .ui-btn-down-e";
+$btn-active-selector: ".ui-btn-active";
+
+/* Apply baseline button styling once to every kind of button. */
+.up {
+	.ui-btn {
+		border-width: 1px;
+		border-style: solid;
+		font-family: Helvetica, Arial, sans-serif;
+		font-weight: bold;
+		text-decoration: none;
+		cursor: pointer;
+		@include text-shadow(dark);
+	}
+}
+
+// Button Up state.
+@mixin button-up() {
+	border-color: $black;
+	background: $black;
+	color: $white;
+	@include gradient($graydarkest, $black);
+	a.ui-link-inherit {
+		color: $white;
+	}
+}
+
+// Button Hover state.
+@mixin button-hover() {
+	border-color: $black;
+	background: $black;
+	color: $white;
+	@include gradient($graydarker, $black);
+	a.ui-link-inherit { 
+		color: $white;
+	}
+}
+
+// Button Down state.
+@mixin button-down() {
+	border-color: $black;
+	background: $black;
+	color: $white;
+	@include gradient($black, $graydarkest);
+	a.ui-link-inherit {
+		color: $white;
+	}
+}
+
+// Button Active state.
+@mixin button-active() {
+	border-color: $black;
+	background: $black;
+	color: $white;
+	@include text-shadow(dark);
+	@include gradient($graydarkest, $black);
+	a.ui-link-inherit {
+		color: $white;
+	}
+}
+
+// Button mixin. Calls in the Up, Hover, and Down states.
+@mixin button() {
+	#{$btn-up-selector} {
+		@include button-up();
+	}
+	#{$btn-hover-selector} {
+		@include button-hover();
+	}
+	#{$btn-down-selector} {
+		@include button-down();
+	}
+	#{$btn-active-selector} {
+		@include button-active();
+	}
+}

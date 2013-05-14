@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!--
 
     Licensed to Jasig under one or more contributor license
@@ -20,21 +20,20 @@
 
 -->
 
-<skins>
-  
-  <skin>
-    <skin-key>iphone</skin-key>
-    <skin-name>iphone</skin-name>
-    <skin-description>
-      iPhone theme and skin.
-    </skin-description>
-  </skin>
+<resources xmlns="http://www.jasig.org/uportal/web/skin"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
 
-  <skin>
-    <skin-key>kyoto</skin-key>
-    <skin-name>kyoto</skin-name>
-    <skin-description>
-      Kyoto mobile theme and skin.
-    </skin-description>
-  </skin>
-</skins>
+  <!-- Parameter passed into the theme XSLT -->
+  <parameter name="fss-theme">fl-theme-iphone</parameter>
+
+  <!-- Import common CSS -->
+  <css import="true">../common/common_skin.xml</css>
+
+  <!-- Import kyoto skin overrides -->
+  <css>portal.css</css>
+
+  <!-- Import common Javascript -->
+  <js import="true">../common/common_skin.xml</js>
+
+</resources>

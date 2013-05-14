@@ -1,0 +1,17 @@
+/* OVERRIDES */
+
+.ui-content .ui-header {
+	margin-top: -15px;
+	margin-left: -15px;
+	margin-bottom: 15px;
+	width:320px;
+}
+
+.ui-header .ui-title {
+	margin: 0 0 0 0;
+	padding: .6em 30% .8em;
+}
+
+.up-new-item-count-0 {
+	display: none;
+}
