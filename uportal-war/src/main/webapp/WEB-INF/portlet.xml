@@ -685,6 +685,35 @@
             <title>Translator</title>
         </portlet-info>
     </portlet>
+    
+    <portlet>
+        <description>BackgroundPreferencePortlet renders a background image in the header
+        of the portlet.  It also provides a configuration page where the user can choose
+        their own background image from a list of supplied options.
+        </description>
+        <portlet-name>backgroundPreference</portlet-name>
+        <display-name>BackgroundPreference Portlet</display-name>
+
+        <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>classpath:/properties/contexts/portlet/BackgroundPreference.xml</value>
+		</init-param>
+		
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+
+        <supported-locale>en</supported-locale>
+
+        <portlet-info>
+            <title>Put the portlet title here</title>
+            <short-title>Portlet Short Title</short-title>
+            <keywords>put keywords here</keywords>
+        </portlet-info>
+    </portlet>
+    
 
     <custom-portlet-mode>
         <description>Allows the portlet to render a preferences edit UI during publishing</description>

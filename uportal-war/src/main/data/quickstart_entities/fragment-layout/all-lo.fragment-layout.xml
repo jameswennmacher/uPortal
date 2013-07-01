@@ -28,8 +28,9 @@
       <channel fname="emergency-alert" unremovable="false" hidden="false" immutable="false" ID="n5"/>
       <channel fname="tips" unremovable="false" hidden="false" immutable="false" ID="n6"/>
       <channel fname="attachments" unremovable="true" hidden="false" immutable="false" ID="n7"/>
+      <channel fname="background-preference" unremovable="true" hidden="false" immutable="false" ID="n8"/>
     </folder>
-    <folder ID="s8" hidden="false" immutable="false" name="Footer folder" type="footer" unremovable="false">
+    <folder ID="s9" hidden="false" immutable="false" name="Footer folder" type="footer" unremovable="false">
     </folder>
   </folder>
 </layout>
