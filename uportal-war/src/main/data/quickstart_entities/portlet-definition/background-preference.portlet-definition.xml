@@ -42,7 +42,7 @@
     </parameter>
     <parameter>
         <name>role</name>
-        <value>alert</value>
+        <value>tips</value>
     </parameter>
     <parameter>
         <name>disableDynamicTitle</name>
@@ -70,7 +70,7 @@
     </parameter>
     <parameter>
         <name>showChrome</name>
-        <value>true</value>
+        <value>false</value>
     </parameter>
     <parameter>
         <name>mobileIconUrl</name>

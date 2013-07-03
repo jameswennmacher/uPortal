@@ -35,18 +35,13 @@
         <property name="interceptors"><bean class="org.jasig.portal.portlets.MinimizedStateHandlerInterceptor"/></property>
     </bean>
     
-    <!-- 
-    <bean id="portletModeHandlerMapping"
-        class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">
-        <property name="interceptors" ref="minimizedStateHandlerInterceptor" />
-        <property name="portletModeMap">
-            <map>
-                <entry key="view">
-                    <bean class="org.jasig.portal.portlets.backgroundpreference.ViewContentController"/>
-                </entry>
-            </map>
-        </property>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:properties/portal.properties" />
     </bean>
-    -->
     
+    <util:list id="backgroundPreferenceImages" scope="session" value-type="java.lang.String">
+    	<value>/uPortal/media/skins/universality/uportal3/images/galaxy.jpg</value>
+    	<value>/uPortal/media/skins/universality/uportal3/images/mountain.jpg</value>
+    	<value>/uPortal/media/skins/universality/uportal3/images/nebula.jpg</value>
+    </util:list>
 </beans>
