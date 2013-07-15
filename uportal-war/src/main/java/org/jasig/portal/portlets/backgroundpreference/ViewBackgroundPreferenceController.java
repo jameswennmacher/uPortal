@@ -1,36 +1,41 @@
 package org.jasig.portal.portlets.backgroundpreference;
 
-import java.util.List;
-import java.util.Enumeration;
-import javax.portlet.PortletRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
-import org.springframework.web.portlet.bind.annotation.ResourceMapping;
-import org.springframework.web.portlet.ModelAndView;
 
 import javax.portlet.RenderRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 import javax.portlet.PortletPreferences;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 
 @Controller
 @RequestMapping("VIEW")
 public class ViewBackgroundPreferenceController { 
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final String[] EMPTY_STRINGS = new String[]{};
+    private static final String SELECTED_IMAGE_SUFFIX = "SelectedBackgroundImage";
+    private static final String IMAGES_SUFFIX = "BackgroundImages";
 
-	@Autowired(required=true)
-	private ApplicationContext applicationContext;
-	
+    BackgroundImageSetSelectionStrategy imageSetSelectionStrategy = new MobileImageSelectionStrategyImpl();
+
+    ViewSelectionStrategy viewSelectionStrategy = new MobileViewSelectionStrategyImpl();
+
+    public void setImageSetSelectionStrategy(BackgroundImageSetSelectionStrategy imageSetSelectionStrategy) {
+        this.imageSetSelectionStrategy = imageSetSelectionStrategy;
+    }
+
+    public void setViewSelectionStrategy(ViewSelectionStrategy viewSelectionStrategy) {
+        this.viewSelectionStrategy = viewSelectionStrategy;
+    }
+
     /**
      * Display the main user-facing view of the portlet.
      * 
@@ -38,27 +43,26 @@ public class ViewBackgroundPreferenceController {
      * @return
      */
 	@RenderMapping
-	public ModelAndView getView(RenderRequest request){
-		final ModelAndView mv = new ModelAndView();
-		final List<String> images =  (List<String>) applicationContext.getBean("backgroundPreferenceImages", List.class);
+	public String getView(RenderRequest request, Model model){
 
+        String imageSetName = imageSetSelectionStrategy.getImageSelectionCategory(request);
 		PortletPreferences prefs = request.getPreferences();
-		String preferedBackgroundImage = prefs.getValue("backgroundImage", "");
-		mv.addObject("backgroundImage", preferedBackgroundImage);
-		mv.addObject("images", images);
-		mv.setView("jsp/BackgroundPreference/viewBackgroundPreference");
-		return mv;
-	}    
+        String[] images = prefs.getValues(imageSetName + IMAGES_SUFFIX, EMPTY_STRINGS);
+		String preferredBackgroundImage = prefs.getValue(imageSetName + SELECTED_IMAGE_SUFFIX, "");
+		model.addAttribute("backgroundImage", preferredBackgroundImage);
+		model.addAttribute("images", images);
+        model.addAttribute("overlayImageOn", prefs.getValue("overlayImageOn", null));
+        model.addAttribute("applyOpacityTo", prefs.getValue("applyOpacityTo", null));
+        model.addAttribute("opacityCssValue", prefs.getValue("opacityCssValue", "1.0"));
+		return "/jsp/BackgroundPreference/" + viewSelectionStrategy.getViewName(request);
+	}
 	
-    @RequestMapping(params = {"action=savePreferences"})
-    public void savePreferences(ActionRequest request, ActionResponse response) throws Exception {
+    @ActionMapping(params = {"action=savePreferences"})
+    public void savePreferences(ActionRequest request, @RequestParam String backgroundImage) throws Exception {
+        String imageSetName = imageSetSelectionStrategy.getImageSelectionCategory(request);
         PortletPreferences prefs = request.getPreferences();
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String parameterName = parameterNames.nextElement();
-            String parameterValue = request.getParameter(parameterName);
-            prefs.setValue(parameterName, (parameterValue != null ? parameterValue : ""));
-            prefs.store();
-        }
+        prefs.setValue(imageSetName + SELECTED_IMAGE_SUFFIX, (backgroundImage != null ? backgroundImage : ""));
+        prefs.store();
     }
+
 }

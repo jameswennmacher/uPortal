@@ -72,12 +72,31 @@
         <name>showChrome</name>
         <value>false</value>
     </parameter>
-    <parameter>
-        <name>mobileIconUrl</name>
-        <value>/uPortal/media/skins/icons/mobile/calendar.png</value>
-    </parameter>
-    <parameter>
-        <name>iconUrl</name>
-        <value>/ResourceServingWebapp/rs/tango/0.8.90/32x32/mimetypes/x-office-calendar.png</value>
-    </parameter>
+    <portlet-preference>
+        <name>defaultBackgroundImages</name>
+        <value>/uPortal/media/skins/universality/backgroundImages/galaxy.jpg</value>
+        <value>/uPortal/media/skins/universality/backgroundImages/mountain.jpg</value>
+        <value>/uPortal/media/skins/universality/backgroundImages/nebula.jpg</value>
+    </portlet-preference>
+    <portlet-preference>
+        <name>mobileBackgroundImages</name>
+        <value>/uPortal/media/skins/muniversality/backgroundImages/galaxy.jpg</value>
+        <value>/uPortal/media/skins/muniversality/backgroundImages/mountain.jpg</value>
+        <value>/uPortal/media/skins/muniversality/backgroundImages/nebula.jpg</value>
+    </portlet-preference>
+    <!-- HTML element or class to apply background image to -->
+    <portlet-preference>
+        <name>overlayImageOn</name>
+        <value>#portalPageBody</value>
+    </portlet-preference>
+    <!-- HTML element or class to apply opacity to -->
+    <portlet-preference>
+        <name>applyOpacityTo</name>
+        <value>.up-portlet-wrapper</value>
+    </portlet-preference>
+    <!-- CSS opacity to apply to HTML element from 'applyOpacityTo' -->
+    <portlet-preference>
+        <name>opacityCssValue</name>
+        <value>0.75</value>
+    </portlet-preference>
 </portlet-definition>

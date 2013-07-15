@@ -38,10 +38,12 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:properties/portal.properties" />
     </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/BackgroundPreference/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
     
-    <util:list id="backgroundPreferenceImages" scope="session" value-type="java.lang.String">
-    	<value>/uPortal/media/skins/universality/uportal3/images/galaxy.jpg</value>
-    	<value>/uPortal/media/skins/universality/uportal3/images/mountain.jpg</value>
-    	<value>/uPortal/media/skins/universality/uportal3/images/nebula.jpg</value>
-    </util:list>
 </beans>
