@@ -1,0 +1,1 @@
+<p>Maximized view</p>
