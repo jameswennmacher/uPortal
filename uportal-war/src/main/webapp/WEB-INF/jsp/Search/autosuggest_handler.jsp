@@ -1,28 +1,42 @@
 <style type="text/css">
+	.ui-autocomplete.ui-menu {
+		padding: 0;
+		overflow: hidden;
+	}
 	.ui-autocomplete li {
 		list-style: none;
 	}
 
+	.ui-autocomplete .ui-menu-item a {
+		border-bottom: 1px solid #efefef;
+		padding: .5em;
+	}
+
 	.ui-autocomplete .ui-menu-item a:hover {
-		color: #212121;
 		cursor: pointer;
+	}
+	.ui-autocomplete .ui-menu-item a:hover .autocomplete-header {
+		color: #fff;
 	}
 
 	.ui-autocomplete a.ui-state-focus {
 		border: 0;
+		background: rgb(62, 70, 79);
+		color: #fff;
+	}
+	.ui-autocomplete a.ui-corner-all {
+		-webkit-border-radius: 0 0 0 0;
+		border-radius: 0 0 0 0;
+	}
+	.ui-autocomplete .autocomplete-header {
+		font-weight: 800;
+		color: rgb(123, 34, 64);;
 	}
 
 </style>
 <script type="text/javascript">
-<%--
-	NOTE: The "j" variable is an over-ride to prevent a colission with the other versions of 
-	      jQuery/jQueryUI on the page.
 
-	      This is not an optimal solution and should be refactored at some point to make it 
-	      less dependant on specific versions of jQuery/jQueryUI.
---%>
-
-(function($, _) {
+(function($) {
 	var initSearchAuto = function() {
 
 		var searchField = $('form input.searchInput');
@@ -35,7 +49,7 @@
 		 * @return {string}      Returns a formatted string that will be injected into the menu
 		 */
 		var formatOutput = function(item) {
-			var output = "<a>" + item.label + "<br>" + item.desc + "</a>";
+			var output = '<a><span class="autocomplete-header">' + item.label + '</span><br>' + item.desc + '</a>';
 			return output;
 		}
 
@@ -75,6 +89,6 @@
 	$(document).ready(function() {
 		initSearchAuto();
 	});
-})(searchJq, _);
+})(searchjQ);
 
 </script>

@@ -26,7 +26,7 @@
 
     <script language="javascript" type="text/javascript">
       
-      var searchJq = jQuery.noConflict();
+      var searchjQ = jQuery.noConflict();
 
       
     </script>
