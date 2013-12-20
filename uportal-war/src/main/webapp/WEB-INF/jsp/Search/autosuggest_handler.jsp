@@ -5,6 +5,9 @@
 	}
 	.ui-autocomplete li {
 		list-style: none;
+        max-width: 315px; /* Fixes Autocomplete on 1st search after page render would have very wide results box off side of window */
+        /*max-height: 75px;*/ /* Limiting # of chars sent tends to keep description to 2 lines in autocomplete results so don't need max-height. */
+        overflow:hidden;
 	}
 
 	.ui-autocomplete .ui-menu-item a {
@@ -49,9 +52,17 @@
 		 * @return {string}      Returns a formatted string that will be injected into the menu
 		 */
 		var formatOutput = function(item) {
-			var output = '<a><span class="autocomplete-header">' + item.label + '</span><br>' + item.desc + '</a>';
+			var output = '<a><span class="autocomplete-header">' + htmlEscape(item.label) + '</span><br>' + htmlEscape(item.desc) + '</a>';
 			return output;
 		}
+
+        // Simple function to escape specific HTML characters so they aren't a problem. &, quote, and single quote
+        // are handled by jQuery so only need to deal with < and >
+        function htmlEscape(str) {
+            return String(str)
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+        }
 
 		searchField.autocomplete({
 			minLength: 3,

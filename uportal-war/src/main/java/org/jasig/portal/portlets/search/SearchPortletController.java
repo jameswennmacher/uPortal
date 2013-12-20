@@ -52,6 +52,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.jasig.portal.portlet.PortletUtils;
 import org.jasig.portal.portlet.container.properties.ThemeNameRequestPropertiesManager;
@@ -100,6 +101,7 @@ public class SearchPortletController {
     private static final String SEARCH_LAUNCH_FNAME = "searchLaunchFname";
     private static final String AJAX_RESPONSE_RESOURCE_ID = "retrieveSearchJSONResults";
     private static final List<String> UNDEFINED_SEARCH_RESULT_TYPE = Arrays.asList(new String[] {"UndefinedResultType"});
+    private static final String AUTOCOMPLETE_MAX_TEXT_LENGTH_PREF_NAME = "autocompleteMaxTextSize";
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());    
     
@@ -488,6 +490,10 @@ public class SearchPortletController {
      */
     @ResourceMapping(value = "retrieveSearchJSONResults")
     public ModelAndView showJSONSearchResults(PortletRequest request) {
+
+        PortletPreferences prefs = request.getPreferences();
+        int maxTextLength = Integer.parseInt(prefs.getValue(AUTOCOMPLETE_MAX_TEXT_LENGTH_PREF_NAME, "180"));
+
         final Map<String,Object> model = new HashMap<String, Object>();
         List<AutocompleteResultsModel> results = new ArrayList<AutocompleteResultsModel>();
 
@@ -497,7 +503,7 @@ public class SearchPortletController {
             final PortalSearchResults portalSearchResults = this.getPortalSearchResults(request, queryId);
             if (portalSearchResults != null) {
                 final ConcurrentMap<String, List<Tuple<SearchResult, String>>> resultsMap = portalSearchResults.getResults();
-                results = collateResultsForAutoCompleteResponse(resultsMap);
+                results = collateResultsForAutoCompleteResponse(resultsMap, maxTextLength);
             }
         }
         model.put("results", results);
@@ -517,12 +523,16 @@ public class SearchPortletController {
      * a search result is in multiple category types, even within the same priority, the search result will show up
      * multiple times.  Currently all results are in a single category so it is not worth adding extra complexity to
      * handle a situation that is not present.
+     *
+     * This method also cleans up and trims down the amount of data shipped so the feature is more responsive,
+     * especially on mobile networks.
      * @param resultsMap
      * @return
      */
     private List<AutocompleteResultsModel> collateResultsForAutoCompleteResponse
-            (ConcurrentMap<String, List<Tuple<SearchResult, String>>> resultsMap) {
-        SortedMap<Integer, List<AutocompleteResultsModel>> prioritizedResultsMap = getSortedMapResults(resultsMap);
+            (ConcurrentMap<String, List<Tuple<SearchResult, String>>> resultsMap, int maxTextLength) {
+        SortedMap<Integer, List<AutocompleteResultsModel>> prioritizedResultsMap =
+                getCleanedAndSortedMapResults(resultsMap, maxTextLength);
 
         // Consolidate the results into a single, ordered list of max entries.
         List<AutocompleteResultsModel> results = new ArrayList<AutocompleteResultsModel>();
@@ -541,8 +551,8 @@ public class SearchPortletController {
      * @param resultsMap Search results map
      * @return Sorted map of search results ordered on search result type priority
      */
-    private SortedMap<Integer, List<AutocompleteResultsModel>> getSortedMapResults(
-            ConcurrentMap<String, List<Tuple<SearchResult, String>>> resultsMap) {
+    private SortedMap<Integer, List<AutocompleteResultsModel>> getCleanedAndSortedMapResults(
+            ConcurrentMap<String, List<Tuple<SearchResult, String>>> resultsMap, int maxTextLength) {
         SortedMap<Integer, List<AutocompleteResultsModel>> prioritizedResultsMap = createAutocompletePriorityMap();
 
         // Put the results into the map of <priority,list>
@@ -559,8 +569,8 @@ public class SearchPortletController {
                     if (!autocompleteIgnoreResultTypes.contains(category)) {
                         int priority = calculatePriorityFromCategory(category);
                         AutocompleteResultsModel result = new AutocompleteResultsModel(
-                                searchResult.getTitle(),
-                                searchResult.getSummary(),
+                                cleanAndTrimString(searchResult.getTitle(), maxTextLength),
+                                cleanAndTrimString(searchResult.getSummary(), maxTextLength),
                                 tupleSearchResult.getSecond(),
                                 category);
                         prioritizedResultsMap.get(priority).add(result);
@@ -569,6 +579,16 @@ public class SearchPortletController {
             }
         }
         return prioritizedResultsMap;
+    }
+
+    // Remove extraneous spaces, newlines, returns, tabs, etc. and limit the length.  This helps improve performance
+    // for slower network connections and makes autocomplete UI results smaller/shorter.
+    private String cleanAndTrimString(String text, int maxTextLength) {
+        if (StringUtils.isNotBlank(text)) {
+            String cleaned = text.trim().replaceAll("[\\s]+"," ");
+            return cleaned.length() <= maxTextLength ? cleaned : cleaned.substring(0, maxTextLength) + " ...";
+        }
+        return text;
     }
 
     private SortedMap<Integer, List<AutocompleteResultsModel>> createAutocompletePriorityMap() {
