@@ -39,8 +39,6 @@
     <css included="plain">/ResourceServingWebapp/rs/jqueryui/1.10.3/theme/smoothness/jquery-ui-1.10.3-smoothness.css</css>
     <css included="aggregated">/ResourceServingWebapp/rs/jqueryui/1.10.3/theme/smoothness/jquery-ui-1.10.3-smoothness.min.css</css>
 
-  
-
     <css>css/styles.css</css>
 
   <js import="true">../common/common_skin.xml</js>
