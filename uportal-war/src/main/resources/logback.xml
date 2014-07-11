@@ -149,7 +149,10 @@
     <appender-ref ref="PORTAL"/>
   </logger>
   -->
-  
+    <logger name="org.jasig.portal.security.provider.cas.clearpass" additivity="false" level="DEBUG">
+        <appender-ref ref="PORTAL"/>
+    </logger>
+
   <!-- Hide some bad Hibernate log messages -->
   <logger name="org.hibernate.cfg.annotations.reflection.JPAOverriddenAnnotationReader" additivity="false" level="ERROR"/>
   <logger name="org.hibernate.ejb.metamodel.MetadataContext" additivity="false" level="FATAL"/>

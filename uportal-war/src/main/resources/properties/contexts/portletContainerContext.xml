@@ -114,10 +114,10 @@
      | NOTE:  Other configuration is also needed to obtain and cache the user's password so this bean can provide it.
      | See the uPortal manual https://wiki.jasig.org/display/UPM41/Caching+and+Re-playing+Credentials.
      -->
-    <!--bean id="cachedPasswordUserInfoService"
+    <bean id="cachedPasswordUserInfoService"
         class="org.jasig.portal.portlet.container.services.CachedPasswordUserInfoService">
         <property name="decryptPassword" value="false"/>
-    </bean-->
+    </bean>
     
     <bean id="portalAdministrationService" class="org.apache.pluto.driver.container.DefaultPortalAdministrationService">
     	<property name="administrativeRequestListeners">
