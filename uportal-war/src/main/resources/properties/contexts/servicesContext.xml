@@ -100,6 +100,15 @@
         </entry>
     </util:map>
 
+    <!--
+     | For search results create a set of search result types that will have the link text substituted with the
+     | search match's portlet title.  Allows changing static text such as "cms" to the portlet definition title
+     | so the results are more meaningful to the user.  UP-4266.
+     +-->
+    <util:set id="searchResultsLinkNamePortletTitleSubstitutionSet" value-type="java.lang.String">
+        <value>Portlet Content</value>  <!-- For SimpleCMS v1.08+ -->
+    </util:set>
+
     <bean id="permissionTargetProviderRegistry" class="org.jasig.portal.permission.target.PermissionTargetProviderRegistryImpl">
         <property name="providers">
             <map>

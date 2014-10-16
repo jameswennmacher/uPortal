@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -45,6 +46,9 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.Validate;
 import org.jasig.portal.portlet.PortletUtils;
 import org.jasig.portal.portlet.container.properties.ThemeNameRequestPropertiesManager;
+import org.jasig.portal.portlet.om.IPortletDefinition;
+import org.jasig.portal.portlet.om.IPortletEntity;
+import org.jasig.portal.portlet.om.IPortletWindow;
 import org.jasig.portal.portlet.om.IPortletWindowId;
 import org.jasig.portal.portlet.registry.IPortletWindowRegistry;
 import org.jasig.portal.search.PortletUrl;
@@ -100,7 +104,9 @@ public class SearchPortletController {
     private List<String> tabKeys = Collections.emptyList();
     private String defaultTabKey = "portal.results";
     private int maximumSearchesPerMinute = 18;
-    
+
+    private Set<String> searchResultsLinkTextPortletTitleSubstitutionSet = new HashSet<String>();
+
     @Resource(name="searchServices")
     public void setPortalSearchServices(List<IPortalSearchService> searchServices) {
         this.searchServices = searchServices;
@@ -120,6 +126,11 @@ public class SearchPortletController {
     @Value("${org.jasig.portal.portlets.searchSearchPortletController.maximumSearchesPerMinute:18}")
     public void setMaximumSearchesPerMinute(int maximumSearchesPerMinute) {
         this.maximumSearchesPerMinute = maximumSearchesPerMinute;
+    }
+
+    @Resource(name = "searchResultsLinkNamePortletTitleSubstitutionSet")
+    public void setSearchResultsLinkTextPortletTitleSubstitutionSet(Set<String> portletTypeSet) {
+        this.searchResultsLinkTextPortletTitleSubstitutionSet = portletTypeSet;
     }
 
     /**
@@ -389,10 +400,30 @@ public class SearchPortletController {
         for (SearchResult result : portletSearchResults.getSearchResult()) {
             final String resultUrl = this.getResultUrl(httpServletRequest, result, portletWindowId);
             this.logger.debug("Created {} with from {}", resultUrl, result.getTitle());
+            modifySearchResultLinkTitle(result, httpServletRequest, portletWindowId);
             results.addPortletSearchResults(resultUrl, result);
         }
     }
-    
+
+    /**
+     * Since portlets don't have access to the portlet definition to create a useful search results link using
+     * something like the portlet definition's title, post-process the link text and for those portlets whose
+     * type is present in the substitution set,replace the title with the portlet definition's title.
+     * @param result Search results object (may be modified)
+     * @param httpServletRequest HttpServletRequest
+     * @param portletWindowId Portlet Window ID
+     */
+    protected void modifySearchResultLinkTitle(SearchResult result, final HttpServletRequest httpServletRequest,
+                                               final IPortletWindowId portletWindowId) {
+        if (result.getType().size() > 0 && searchResultsLinkTextPortletTitleSubstitutionSet.contains(result.getType().get(0))) {
+            final IPortletWindow portletWindow = this.portletWindowRegistry.getPortletWindow(httpServletRequest, portletWindowId);
+            final IPortletEntity portletEntity = portletWindow.getPortletEntity();
+            final IPortletDefinition portletDefinition = portletEntity.getPortletDefinition();
+            String portletTitle = portletDefinition.getTitle();
+            result.setTitle(portletTitle);
+        }
+    }
+
     /**
      * Determine the url for the search result 
      */
