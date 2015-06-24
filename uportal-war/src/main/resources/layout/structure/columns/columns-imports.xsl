@@ -65,9 +65,8 @@
      | Regions behave normally in dashboard (normal) and focused (maximized) mode;  in
      | DETACHED window state, only a few regions are processed, and then ONLY IF THE STICKY
      | HEADER option is in effect.  The list of regions included with a sticky-header is:
-     | hidden-top, page-top, page-bottom, hidden-bottom.  The remaining regions are not
-     | present in the DOM and therefore their portlets MUST NOT be added to the rendering
-     | queue. 
+     | hidden-top, detached-banner, and hidden-bottom.  The remaining regions are not present
+     | in the DOM and therefore their portlets MUST NOT be added to the rendering queue.
      +-->
     <xsl:template name="region">
         <region name="{@type}">
