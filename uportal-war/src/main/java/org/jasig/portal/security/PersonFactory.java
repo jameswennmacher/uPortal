@@ -18,6 +18,9 @@
  */
 package org.jasig.portal.security;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jasig.portal.IUserIdentityStore;
 import org.jasig.portal.properties.PropertiesManager;
 import org.jasig.portal.security.provider.PersonImpl;
@@ -43,7 +46,9 @@ import org.jasig.portal.utils.threading.SingletonDoubleCheckedCreator;
  * @version $Revision$
  */
 public class PersonFactory {
-    
+
+    private static Set<String> ignoredAttributes = new HashSet<>();
+
     /**
      * The guest user name specified in portal.properties.
      */
@@ -72,7 +77,9 @@ public class PersonFactory {
      * @return an empty <code>IPerson</code> implementation
      */
     public static IPerson createPerson() {
-        return new PersonImpl();
+        PersonImpl person = new PersonImpl();
+        person.setIgnoredUserAttributes(ignoredAttributes);
+        return person;
     }
 
     /**
@@ -108,6 +115,17 @@ public class PersonFactory {
         IPerson person = createPerson();
         
         return new RestrictedPerson(person);
+    }
+
+    /**
+     * Allow Spring to set ignoredAttributes set.  A bit of a hack; better solution would be to use AspectJ AOP to
+     * inject the attribute into dynamically-created Person objects, but not willing to take on switching
+     * uPortal to use AspectJ AOP vs. Spring AOP at this time.  This is a singleton so a non-static method setting
+     * a static will get us there quickly.
+     * @param attributesToIgnore Attributes to ignore when calculating distinct usernames.
+     */
+    public void setIgnoredAttributes(HashSet attributesToIgnore) {
+        ignoredAttributes = new HashSet<>(attributesToIgnore);
     }
     
 }

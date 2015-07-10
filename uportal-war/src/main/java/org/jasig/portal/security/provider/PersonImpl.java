@@ -18,12 +18,12 @@
  */
 package org.jasig.portal.security.provider;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -38,7 +38,6 @@ import org.jasig.portal.security.PersonFactory;
 /**
  * This is a reference IPerson implementation.
  * @author Adam Rybicki, arybicki@unicon.net
- * @version $Revision$
  */
 public class PersonImpl implements IPerson {
     private static final long serialVersionUID = 1L;
@@ -49,6 +48,7 @@ public class PersonImpl implements IPerson {
     protected ISecurityContext m_securityContext = null;
     protected EntityIdentifier m_eid = new EntityIdentifier(null, IPerson.class);
     protected boolean entityIdentifierSet = false;
+    private Set<String> ignoredUserAttributes = new HashSet<>();
 
     public ISecurityContext getSecurityContext() {
         return m_securityContext;
@@ -249,6 +249,35 @@ public class PersonImpl implements IPerson {
     */
     public String getName() {
         return (String) getAttribute(IPerson.USERNAME);
+    }
+
+    /**
+     * Set of user attributes to ignore in the getAttributeSensitiveUsername method.
+     * @param ignoredUserAttributes
+     */
+    public void setIgnoredUserAttributes(Set<String> ignoredUserAttributes) {
+        this.ignoredUserAttributes = ignoredUserAttributes;
+    }
+
+    /**
+     * Returns a username string that has a distinct value added that considers the user's user attributes.
+     * This is useful for cache keys where you may want to cache information for different 'versions' of the
+     * person based on their attributes, such as guest with nativeClient=true having a different cached versions
+     * of the layout and PAGS group membership.
+     *
+     * @return Username string with distinct value based on the person's applicable user attributes
+     */
+    @Override
+    public String getAttributeSensitiveUsername() {
+        int hash = 17;
+        boolean attributeApplies = false;
+        for ( Map.Entry<String, List<Object>> attribute : userAttributes.entrySet()) {
+            if (!ignoredUserAttributes.contains(attribute.getKey())) {
+                hash = hash * 31 + attribute.hashCode();
+                attributeApplies = true;
+            }
+        }
+        return attributeApplies ? getUserName() + Integer.toString(hash) : getUserName();
     }
 
     @Override

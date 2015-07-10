@@ -214,7 +214,8 @@ public Iterator findContainingGroups(IGroupMember gm) throws GroupsException
             try
             {
                 if ( getGroupFromCache(group.getEntityIdentifier().getKey()) == null )
-                    { cacheAdd(group); }
+                    {   log.debug("Adding group {} to cache", gm.getKey());
+                        cacheAdd(group); }
             }
             catch (CachingException ce)
                 { throw new GroupsException("Problem finding containing groups", ce); }

@@ -137,6 +137,16 @@ public interface IPerson extends Principal, IAdditionalDescriptor, IBasicEntity,
    */
   public boolean isGuest ();
 
+  /**
+   * Returns a username string that has a distinct value added that considers the user's user attributes.
+   * This is useful for cache keys where you may want to cache information for different 'versions' of the
+   * person based on their attributes, such as guest with nativeClient=true having a different cached versions
+   * of the layout and PAGS group membership.
+   *
+   * @return Username string with distinct value based on the person's user attributes
+   */
+  String getAttributeSensitiveUsername();
+
 }
 
 

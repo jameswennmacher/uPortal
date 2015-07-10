@@ -31,6 +31,8 @@ import org.jasig.portal.IUserIdentityStore;
 import org.jasig.portal.IUserProfile;
 import org.jasig.portal.UserProfile;
 import org.jasig.portal.layout.IUserLayoutStore;
+import org.jasig.portal.security.IPerson;
+import org.jasig.portal.security.PersonFactory;
 import org.jasig.portal.security.provider.BrokenSecurityContext;
 import org.jasig.portal.security.provider.PersonImpl;
 import org.jasig.portal.utils.Tuple;
@@ -280,7 +282,7 @@ public final class NodeReferenceFactory {
      */
     /* TODO:  make private */ Tuple<String, DistributedUserLayout> getUserLayoutTuple(String userName, int userId) {
         
-        final PersonImpl person = new PersonImpl();
+        final IPerson person = PersonFactory.createPerson();
         person.setUserName(userName);
         person.setID(userId);
         person.setSecurityContext(new BrokenSecurityContext());

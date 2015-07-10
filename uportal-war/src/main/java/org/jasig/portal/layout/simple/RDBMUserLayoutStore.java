@@ -53,6 +53,7 @@ import org.jasig.portal.rdbm.IJoinQueryString;
 import org.jasig.portal.security.IPerson;
 import org.jasig.portal.security.IPersonManager;
 import org.jasig.portal.security.ISecurityContext;
+import org.jasig.portal.security.PersonFactory;
 import org.jasig.portal.security.provider.PersonImpl;
 import org.jasig.portal.spring.locator.CounterStoreLocator;
 import org.jasig.portal.utils.DocumentFactory;
@@ -1100,7 +1101,7 @@ public abstract class RDBMUserLayoutStore implements IUserLayoutStore, Initializ
                                 throw new RuntimeException("Need to clone the '" + profileFname + "' profile from template user for " + person + " but they have no template user");
                             }
 
-                            IPerson defaultProfilePerson = new PersonImpl();
+                            IPerson defaultProfilePerson = PersonFactory.createPerson();
                             defaultProfilePerson.setID(defaultProfileUser);
                             if(defaultProfilePerson.getID() != person.getID()) {
                                 UserProfile templateProfile = getUserProfileByFname(defaultProfilePerson,profileFname);
@@ -1640,6 +1641,19 @@ public abstract class RDBMUserLayoutStore implements IUserLayoutStore, Initializ
 
         public String getName() {
             return null;
+        }
+
+        /**
+         * Returns a username string that has a distinct value added that considers the user's user attributes.
+         * This is useful for cache keys where you may want to cache information for different 'versions' of the
+         * person based on their attributes, such as guest with nativeClient=true having a different cached versions
+         * of the layout and PAGS group membership.
+         *
+         * @return Username string with distinct value based on the person's user attributes
+         */
+        @Override
+        public String getAttributeSensitiveUsername() {
+            return getUserName();
         }
     }
 

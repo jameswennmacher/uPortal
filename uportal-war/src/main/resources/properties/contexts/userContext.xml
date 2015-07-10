@@ -48,6 +48,9 @@
    		<property name="descriptors" ref="requestAdditionalDescriptors" />
    	</bean> -->
 
+    <bean id="personFactory" class="org.jasig.portal.security.PersonFactory"
+        p:ignoredAttributes-ref="userAttributesToIgnoreInDistinctUsernameHashing"/>
+
     <util:map id="profileKeyMappings">
         <entry key="desktop" value="default"/>
         <entry key="mobile" value="mobileDefault"/>

@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import org.jasig.portal.IUserIdentityStore;
 import org.jasig.portal.fragment.subscribe.IUserFragmentSubscription;
 import org.jasig.portal.fragment.subscribe.dao.IUserFragmentSubscriptionDao;
@@ -34,15 +36,12 @@ import org.jasig.portal.io.xml.IPortalDataType;
 import org.jasig.portal.io.xml.PortalDataKey;
 import org.jasig.portal.io.xml.SimpleStringPortalData;
 import org.jasig.portal.security.IPerson;
+import org.jasig.portal.security.PersonFactory;
 import org.jasig.portal.security.provider.BrokenSecurityContext;
-import org.jasig.portal.security.provider.PersonImpl;
 import org.jasig.portal.utils.SafeFilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 
 /**
  * @author Eric Dalquist
@@ -118,7 +117,7 @@ public class SubscribedFragmentImporterExporter extends
 	}
 
     private IPerson getPerson(final String username, boolean create) {
-        final IPerson person = new PersonImpl();
+        final IPerson person = PersonFactory.createPerson();
         person.setUserName(username);
         
         int userId;

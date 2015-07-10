@@ -20,13 +20,12 @@ package org.jasig.portal.layout.dlm;
 
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jasig.portal.IUserProfile;
 import org.jasig.portal.security.IPerson;
 import org.jasig.portal.utils.cache.CacheKey;
 import org.jasig.portal.utils.cache.UsernameTaggedCacheEntryPurger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,7 @@ import org.springframework.stereotype.Service;
  */
 @Service("layoutCachingService")
 public class LayoutCachingService implements ILayoutCachingService {
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     
     private Ehcache layoutCache;
     
@@ -48,6 +47,7 @@ public class LayoutCachingService implements ILayoutCachingService {
     @Override
     public void cacheLayout(IPerson owner, IUserProfile profile, DistributedUserLayout layout) {
         final CacheKey cacheKey = this.getCacheKey(owner, profile);
+        logger.debug("Caching layout for {}, key {}", owner.getUserName(), cacheKey.getKey());
         this.layoutCache.put(new Element(cacheKey, layout));
     }
     
@@ -56,6 +56,7 @@ public class LayoutCachingService implements ILayoutCachingService {
         final CacheKey cacheKey = this.getCacheKey(owner, profile);
         final Element element = this.layoutCache.get(cacheKey);
         if (element != null) {
+            logger.debug("Obtaining Cached layout for {}, key {}", owner.getUserName(), cacheKey.getKey());
             return (DistributedUserLayout)element.getObjectValue();
         }
         return null;
@@ -64,13 +65,14 @@ public class LayoutCachingService implements ILayoutCachingService {
     @Override
     public void removeCachedLayout(IPerson owner, IUserProfile profile) {
         final CacheKey cacheKey = this.getCacheKey(owner, profile);
+        logger.debug("Removing cached layout for {}, key {}", owner.getUserName(), cacheKey.getKey());
         this.layoutCache.remove(cacheKey);
     }
     
     protected CacheKey getCacheKey(IPerson owner, IUserProfile profile) {
         return CacheKey.buildTagged(LayoutCachingService.class.getName(),
                 UsernameTaggedCacheEntryPurger.createCacheEntryTag(owner.getUserName()),
-                owner.getUserName(),
+                owner.getAttributeSensitiveUsername(),
                 profile.getProfileId());
     }
 }

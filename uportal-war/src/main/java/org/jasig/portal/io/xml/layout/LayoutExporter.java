@@ -18,20 +18,20 @@
  */
 package org.jasig.portal.io.xml.layout;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import org.dom4j.Element;
 import org.jasig.portal.IUserIdentityStore;
 import org.jasig.portal.IUserProfile;
 import org.jasig.portal.UserProfile;
 import org.jasig.portal.io.xml.crn.AbstractDom4jExporter;
 import org.jasig.portal.layout.IUserLayoutStore;
+import org.jasig.portal.security.IPerson;
+import org.jasig.portal.security.PersonFactory;
 import org.jasig.portal.security.provider.BrokenSecurityContext;
-import org.jasig.portal.security.provider.PersonImpl;
 import org.jasig.portal.utils.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
-
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 
 /**
  * @author Eric Dalquist
@@ -66,7 +66,7 @@ public class LayoutExporter extends AbstractDom4jExporter  {
         }
         
         //Setup empty IPerson used to interact with the layout store
-        final PersonImpl person = new PersonImpl();
+        final IPerson person = PersonFactory.createPerson();
         person.setUserName(userName);
         person.setID(userId);
         person.setSecurityContext(new BrokenSecurityContext());

@@ -38,6 +38,7 @@ import org.jasig.portal.i18n.LocaleManager;
 import org.jasig.portal.layout.IUserLayoutStore;
 import org.jasig.portal.properties.PropertiesManager;
 import org.jasig.portal.security.IPerson;
+import org.jasig.portal.security.PersonFactory;
 import org.jasig.portal.security.provider.PersonImpl;
 import org.jasig.portal.utils.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -268,8 +269,8 @@ public class FragmentActivator
 
     private IPerson bindToOwner( FragmentDefinition fragment )
     {
-        IPerson owner = new PersonImpl();
-        owner.setAttribute( "username", fragment.getOwnerId() );
+        IPerson owner = PersonFactory.createPerson();
+        owner.setUserName(fragment.getOwnerId() );
         int userID = -1;
         
         try
@@ -412,9 +413,9 @@ public class FragmentActivator
         if ( view.getUserId() == -1 )
             return;
 
-        IPerson p = new PersonImpl();
+        IPerson p = PersonFactory.createPerson();
         p.setID( view.getUserId() );
-        p.setAttribute( "username", fragment.getOwnerId() );
+        p.setUserName(fragment.getOwnerId() );
     }
 
     /**

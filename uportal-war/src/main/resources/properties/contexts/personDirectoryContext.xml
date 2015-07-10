@@ -89,8 +89,7 @@
 
     <!--
      | Servlet filter that creates an attribute for the serverName
-     +
-    -->
+     +-->
     <bean id="requestAttributeSourceFilter"
         class="org.jasig.services.persondir.support.web.RequestAttributeSourceFilter">
         <property name="additionalDescriptors" ref="requestAdditionalDescriptors" />
@@ -112,6 +111,18 @@
              for addition to user attributes -->
         <property name="referringParameterName" value="refUrl"/>
     </bean>
+
+    <!--
+     | Ignore certain user attributes when creating distinct username keys for cache keys based on the username and
+     | most user attributes.  This allows for instance different caches for 'guest' based on whether user attributes
+     | were associated with guest via parameters by RequestAttributeSourceFilter so a layout based on having
+     | nativeClient=true is not used by the next guest user that doesn't add that attribute to the session.
+     +-->
+    <util:set id="userAttributesToIgnoreInDistinctUsernameHashing" value-type="java.lang.String">
+        <value>remoteUser</value>
+        <value>serverName</value>
+        <value>agentDevice</value>
+    </util:set>
 
     <!--
      | Session-scoped descriptors object. One of these will exist for each user in their session. It will store the
