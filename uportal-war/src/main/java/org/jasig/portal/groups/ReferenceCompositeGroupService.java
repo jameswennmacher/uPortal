@@ -400,8 +400,8 @@ protected void cacheUpdate(IGroupMember gm) throws GroupsException
 /**
  * Returns a cached <code>IEntity</code> or null if it has not been cached.
  */
-protected IEntity getEntityFromCache(String key) throws CachingException
+protected IEntity getEntityFromCache(IGroupMember gm) throws CachingException
 {
-    return (IEntity) EntityCachingService.instance().get(org.jasig.portal.EntityTypes.LEAF_ENTITY_TYPE, key);
+    return (IEntity) EntityCachingService.instance().get(org.jasig.portal.EntityTypes.LEAF_ENTITY_TYPE, gm.getEntityIdentifier().getKey());
 }
 }

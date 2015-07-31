@@ -167,6 +167,17 @@
   </logger>
   -->
 
+  <!--<logger name="org.jasig.portal.groups.pags" additivity="false" level="DEBUG">-->
+    <!--<appender-ref ref="PORTAL"/>-->
+  <!--</logger>-->
+  <logger name="org.jasig.portal.groups" additivity="false" level="DEBUG">
+    <appender-ref ref="PORTAL"/>
+  </logger>
+  <logger name="org.jasig.portal.layout.dlm.LayoutCachingService" additivity="false" level="DEBUG">
+    <appender-ref ref="PORTAL"/>
+  </logger>
+
+
   <!-- Hide some useful Hibernate performance statistics that clutter the logs in dev.  Enable this to review
        DB connection, flush, and cache times, # of objects flushed, etc. -->
   <logger name="org.hibernate.engine.internal.StatisticalLoggingSessionEventListener" additivity="false" level="WARN"/>

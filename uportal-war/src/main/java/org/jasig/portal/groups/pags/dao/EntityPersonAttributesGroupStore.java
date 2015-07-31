@@ -41,14 +41,16 @@ import org.jasig.portal.groups.IEntitySearcher;
 import org.jasig.portal.groups.IEntityStore;
 import org.jasig.portal.groups.IGroupMember;
 import org.jasig.portal.groups.ILockableEntityGroup;
-import org.jasig.portal.groups.pags.PagsGroup;
 import org.jasig.portal.groups.pags.IPersonTester;
+import org.jasig.portal.groups.pags.PagsGroup;
 import org.jasig.portal.groups.pags.TestGroup;
 import org.jasig.portal.persondir.IPersonAttributesProvider;
 import org.jasig.portal.security.IPerson;
 import org.jasig.portal.security.PersonFactory;
 import org.jasig.portal.security.provider.RestrictedPerson;
 import org.jasig.portal.spring.locator.ApplicationContextLocator;
+import org.jasig.portal.spring.locator.PersonAttributeDaoLocator;
+import org.jasig.services.persondir.IPersonAttributeDao;
 import org.jasig.services.persondir.IPersonAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +95,9 @@ public class EntityPersonAttributesGroupStore implements IEntityGroupStore, IEnt
                { return false; }
            IPerson person = null;
            try {
-               final IPersonAttributes personAttributes = attributesProvider.getPersonAttributes(member.getKey());
+//               final IPersonAttributes personAttributes = attributesProvider.getPersonAttributes(member.getKey());
+               IPersonAttributeDao pa = PersonAttributeDaoLocator.getPersonAttributeDao();
+               final IPersonAttributes personAttributes = pa.getPerson(member.getKey());
 
                RestrictedPerson rp = PersonFactory.createRestrictedPerson();
                if (personAttributes != null) {

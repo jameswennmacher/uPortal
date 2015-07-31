@@ -105,6 +105,7 @@
         <property name="parameterAttributeMapping">
             <util:map>
                 <entry key="nativeClient" value="nativeClient"/>
+                <entry key="cccMisCode" value="cccMisCode"/>
             </util:map>
         </property>
         <!-- refUrl is used to capture request parameters through /uPortal redirect URL sequence into /uPortal/Login

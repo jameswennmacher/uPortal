@@ -418,7 +418,7 @@ public IEntity getEntity(String key, Class type) throws GroupsException
     {
         try
         {
-            IEntity cachedEnt = getEntityFromCache(ent.getEntityIdentifier().getKey());
+            IEntity cachedEnt = getEntityFromCache(ent);
             if ( cachedEnt == null )
                 { cacheAdd(ent); }
             else
