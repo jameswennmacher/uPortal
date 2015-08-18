@@ -49,7 +49,7 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
  */
 @Controller
 @RequestMapping("CONFIG")
-public class DynamicRespondrSkinConfigController {
+public class DynamicRespondrSkinConfigController extends DynamicRespondrSkinBaseController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @ActionMapping(params = "action=update")
@@ -65,6 +65,10 @@ public class DynamicRespondrSkinConfigController {
                 prefs.setValue(name, formValue != null ? formValue : "");
             }
         }
+
+        // Generate the skin.  If no errors, store the preferences.  The user may enter an invalid less filename.
+        // todo: error handling to display message to admin if failure
+        getCssUrlAndCreateCssFileIfNeeded(request, prefs);
 
         prefs.store();
         log.debug("Saved updated configuration");

@@ -19,7 +19,6 @@
 package org.jasig.portal.portlets.dynamicskin;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -56,18 +55,9 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
  */
 @Controller
 @RequestMapping("VIEW")
-public class DynamicRespondrSkinViewController {
-    private static final String RELATIVE_ROOT = "/media/skins/respondr";
-    private static final MessageFormat CSS_PATH_FORMAT = new MessageFormat(RELATIVE_ROOT + "/{0}{1}.css");
-    private static final String DYNAMIC_SKIN_FILENAME_BASE = "skin";
-    private static final String DEFAULT_SKIN_NAME = "defaultSkin";
-    private static final String PREF_SKIN_NAME = DynamicSkinService.CONFIGURABLE_PREFIX + "dynamicSkinName";
-    private static final String PREF_DYNAMIC = DynamicSkinService.CONFIGURABLE_PREFIX +"dynamicSkinEnabled";
+public class DynamicRespondrSkinViewController extends DynamicRespondrSkinBaseController {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
-
-    @Autowired
-    DynamicSkinService service;
 
     @Autowired
     private IPortalRequestUtils portalRequestUtils;
@@ -79,11 +69,7 @@ public class DynamicRespondrSkinViewController {
     private IPortletWindowRegistry portletWindowRegistry;
 
     /**
-     * Display Skin CSS include based on skin's configuration values from portlet preferences.<br/>
-     * dynamic=false: load the pre-built css file from the skins directory and default skin name; e.g.
-     *                RELATIVE_ROOT/{defaultSkin}.css
-     * dynamic=true: Process the default skin less file if needed at RELATIVE_ROOT/{defaultSkin}.less
-     *               to create a customized skin css file (RELATIVE_ROOT/skin-ID#.css to load.
+     * Display Skin CSS based on skin's configuration values from portlet preferences.<br/>
      */
     @RenderMapping
     public ModelAndView displaySkinCssHeader(RenderRequest request, RenderResponse response, Model model) throws IOException {
@@ -97,10 +83,7 @@ public class DynamicRespondrSkinViewController {
         if (PortletRequest.RENDER_HEADERS.equals(request.getAttribute(PortletRequest.RENDER_PART))) {
 
             PortletPreferences prefs = request.getPreferences();
-            Boolean enabled = Boolean.valueOf(prefs.getValue(PREF_DYNAMIC, "false"));
-            String defaultSkinName = prefs.getValue(PREF_SKIN_NAME, DEFAULT_SKIN_NAME);
-            String cssUrl = enabled ? calculateDynamicSkinUrlPathToUse(request, defaultSkinName)
-                    : calculateCssLocationInWebapp(defaultSkinName, "");
+            String cssUrl = getCssUrlAndCreateCssFileIfNeeded(request, prefs);
             model.addAttribute("skinCssUrl", cssUrl);
             return new ModelAndView("jsp/DynamicRespondrSkin/skinHeader");
         } else {
@@ -118,42 +101,6 @@ public class DynamicRespondrSkinViewController {
             // RENDER_MARKUP
             return new ModelAndView("jsp/DynamicRespondrSkin/skinBody", "canAccessSkinConfig", canAccessSkinConfig);
         }
-    }
-
-    /**
-     * Calculate the default skin URL path or the path to a skin CSS file that is specific to the set of
-     * portlet preference values currently defined.
-     * 
-     * @param request
-     * @return
-     * @throws IOException
-     */
-    private String calculateDynamicSkinUrlPathToUse(PortletRequest request, String lessfileBaseName) throws IOException {
-        final String skinToken = service.calculateTokenForCurrentSkin(request);
-        final String locationOnDisk = calculateCssLocationOnDisk(request, skinToken);
-
-        if (!service.skinFileExists(locationOnDisk)) {
-            // Trigger the LESS compilation
-            service.generateSkinCssFile(request, locationOnDisk, skinToken, lessfileBaseName);
-        }
-
-        return calculateCssLocationInWebapp(DYNAMIC_SKIN_FILENAME_BASE, skinToken);
-    }
-
-    private String calculateCssLocationOnDisk(PortletRequest request, String skinCssHashcode) {
-        final String relative = calculateCssLocationInWebapp(DYNAMIC_SKIN_FILENAME_BASE, skinCssHashcode);
-        return request.getPortletSession().getPortletContext().getRealPath(relative);
-    }
-
-    /**
-     * Calculates the relative URL of the CSS file.
-     * @param skinName skin filename
-     * @param skinCssHashcode If dynamic skin, unique string based on preference values. For static skin, may be
-     *                        empty string.
-     * @return Relative URL of the CSS file for the user.
-     */
-    private String calculateCssLocationInWebapp(String skinName, String skinCssHashcode) {
-        return CSS_PATH_FORMAT.format(new Object[] {skinName, skinCssHashcode});
     }
 
 }

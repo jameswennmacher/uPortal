@@ -56,7 +56,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileSystemDynamicSkinService implements DynamicSkinService {
 
-    private static final String DYNASKIN_DEFAULT_ROOT_FOLDER = "/media/skins/respondr";
     private static final String DYNASKIN_TEMPLATE_INCLUDE_FILE = "{0}/{1}.less";
     private static final String DYNASKIN_INCLUDE_FILE = "{0}/configuredSkin-{1}.less";
     private static final String LESS_CSS_JAVASCRIPT_URL = "/media/skins/common/javascript/less/less-1.6.2.js";
@@ -83,6 +82,10 @@ public class FileSystemDynamicSkinService implements DynamicSkinService {
 
     public void setRootFolder(String rootFolder) {
         this.rootFolder = rootFolder;
+    }
+
+    public String getRootFolder() {
+        return rootFolder;
     }
 
     public void setSkinTemplateIncludeFile(String skinTemplateIncludeFile) {
@@ -119,6 +122,7 @@ public class FileSystemDynamicSkinService implements DynamicSkinService {
     public void generateSkinCssFile(PortletRequest request, String filePathname, String skinToken,
                                     String lessfileBaseName) {
 
+        // todo this is not really synchronized.  Different string instances.
         synchronized(filePathname) {
             if (compiledCssFilepaths.contains(filePathname)) {
                 /*
@@ -232,9 +236,8 @@ public class FileSystemDynamicSkinService implements DynamicSkinService {
     }
 
     @Override
-    public String calculateTokenForCurrentSkin(PortletRequest request) {
+    public String calculateTokenForCurrentSkin(PortletPreferences preferences) {
         int hash = 0;
-        PortletPreferences preferences = request.getPreferences();
 
         // Add the list of preference names to an ordered list so we can get reliable hashcode calculations.
         Map<String, String[]> prefs = preferences.getMap();

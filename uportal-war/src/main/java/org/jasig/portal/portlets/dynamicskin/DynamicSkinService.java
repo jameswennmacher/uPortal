@@ -18,6 +18,7 @@
  */
 package org.jasig.portal.portlets.dynamicskin;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
@@ -33,7 +34,19 @@ public interface DynamicSkinService {
      * variables (minus the prefix).  This insures someone can add a non-skin preference value in later as long
      * as it doesn't have this prefix and the preference will not impact the skin.
      */
-    static final String CONFIGURABLE_PREFIX = "PREF";
+    String CONFIGURABLE_PREFIX = "PREF";
+
+    /**
+     * Root folder where the dynamic skin's LESS files and CSS files are stored
+     */
+    String DYNASKIN_DEFAULT_ROOT_FOLDER = "/media/skins/respondr";
+
+    /**
+     * Return the relative path of the skin root folder (relative to webapp context).  Suitable for file system
+     * or URL calculations; e.g. uses "/" as folder separators.
+     * @return path to skin root folder relative to root webapp context.
+     */
+    String getRootFolder();
 
     /**
      * Return true if the filePathname already exists on the file system.
@@ -69,8 +82,8 @@ public interface DynamicSkinService {
      *
      * This calculation process must duplicate computeDefaultHashcode.
      *
-     * @param request Portlet request
-     * @return Hashcode of portlet preference configuration values.
+     *
+     * @param prefs@return Hashcode of portlet preference configuration values.
      */
-    String calculateTokenForCurrentSkin(PortletRequest request);
+    String calculateTokenForCurrentSkin(PortletPreferences prefs);
 }
